@@ -18,7 +18,7 @@
 
 ## Sección 1: Introducción
 
-### Viedo 01. Introducción
+### Video 01. Introducción
 + **Contenido**: Explicación del proyecto a realizar.
 + **URL YouTube**: https://www.youtube.com/watch?v=NShQvNDuUwU&t=16s
 1. Commit Video 01:
@@ -26,7 +26,7 @@
     + $ git commit -m "Commit 01: Introducción"
     + $ git push -u origin main
 
-### Viedo 02. Programas necesarios
+### Video 02. Programas necesarios
 1. Programas requeridos:
     + [Git](https://git-scm.com/downloads)
     + [XAMPP](https://www.apachefriends.org/es/download.html)
@@ -70,7 +70,7 @@
     + $ git commit -m "Commit 02: Programas necesarios"
     + $ git push -u origin main
 
-### Viedo 03. Creación del proyecto
+### Video 03. Creación del proyecto
 **URL Codersfree dominio local**: https://codersfree.com/blog/como-generar-un-dominio-local-en-windows-xampp
 **URL Repositorio del curso**: https://github.com/coders-free/payment
 1. Crear proyecto para la API RESTful:
@@ -123,7 +123,7 @@
     + $ git commit -m "Commit 03: Creación del proyecto"
     + $ git push -u origin main
 
-### Viedo 04. Reutilizar la plantilla Jetstream
+### Video 04. Reutilizar la plantilla Jetstream
 + **URL Documentación Jetstream**: https://jetstream.laravel.com/2.x/introduction.html
 1. Adaptar la plantilla **resources\views\layouts\app.blade.php** a nuestro proyecto:
     ```php
@@ -386,7 +386,7 @@
     + $ git commit -m "Commit 04: Reutilizar la plantilla Jetstream"
     + $ git push -u origin main
 
-### Viedo 05. Llenar con datos falsos nuestra bbdd
+### Video 05. Llenar con datos falsos nuestra bbdd
 1. Crear el modelo **Product** con magración, factory y controlador:
     + $ php artisan make:model Product -mfc
 2. Generar el acceso directo a storage:
@@ -454,7 +454,6 @@
     ```php
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         Storage::deleteDirectory('products');
         Storage::deleteDirectory('articles');
 
@@ -478,8 +477,133 @@
     + $ git commit -m "Commit 05: Llenar con datos falsos nuestra bbdd"
     + $ git push -u origin main
 
-### Viedo 06. Creando nuestros propios estilos css
+### Video 06. Creando nuestros propios estilos css
+1. Crear archivo de estilo **resources\css\buttons.css**:
+    ```css
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+    }
 
+    .btn-primary {
+        @apply bg-blue-500 text-white;
+    }
+
+    .btn-primary:hover {
+        @apply bg-blue-700;
+    }
+
+    .btn-danger {
+        @apply bg-red-500 text-white;
+    }
+
+    .btn-danger:hover {
+        @apply bg-red-700;
+    }
+
+    .btn-success {
+        @apply bg-green-500 text-white;
+    }
+
+    .btn-success:hover {
+        @apply bg-green-700;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-500 text-white;
+    }
+
+    .btn-secondary:hover {
+        @apply bg-gray-700;
+    }
+    ```
+2. Crear archivo de estilo **resources\css\cards.css**:
+    ```css
+    .card{
+        @apply rounded overflow-hidden shadow-lg bg-white;
+    }
+
+    .card-body, .card-footer, .card-header{
+        @apply px-6 py-4;
+    }
+
+    .card-footer, .card-header{
+        @apply bg-gray-50;
+    }
+
+    .card-title{
+        @apply font-bold text-xl mb-2;
+    }
+
+    .card-text{
+        @apply text-gray-700 text-base;
+    }
+    ```
+3. Crear archivo de estilo **resources\css\container.css**
+    ```css
+    .container{
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    ```
+4. Crear archivo de estilo **resources\css\forms.css**
+    ```css
+    .form-group{
+        @apply mb-6;
+    }
+
+    .form-label{
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+    }
+
+    .form-control{
+        @apply appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-100 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400;
+    }
+
+    .form-select{
+        @apply appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-100 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400;
+    }
+
+    .is-invalid{
+        @apply border-red-500 focus:border-red-500;
+    }
+
+    .form-text{
+        @apply text-gray-600 text-xs italic;
+    }
+
+    .invalid-feedback{
+        @apply text-red-500 text-xs italic;
+    }
+    ```
+5. Importar los nuevos estilos **buttons**, **cards**, **container** y **forms** en **resources\css\app.css**:
+    ```css
+    @import 'tailwindcss/base';
+    @import 'tailwindcss/components';
+    @import 'tailwindcss/utilities';
+
+    @import 'buttons.css';
+    @import 'cards.css';
+    @import 'container.css';
+    @import 'forms.css';
+    ```
+6. Deshabilitar la clase **container** de **tailwind** en **tailwind.config.js**:
+    ```js
+    const defaultTheme = require('tailwindcss/defaultTheme');
+
+    module.exports = {
+        ≡
+        corePlugins: {
+            container: false,
+        }
+    };
+    ```
+7. Volver a compilar los estilos:
+    + $ npm run dev
+8. Commit Video 06:
+    + $ git add .
+    + $ git commit -m "Commit 06: Creando nuestros propios estilos css"
+    + $ git push -u origin main
+
+### Video 07. Mostrar productos y artículos
 
 
 
@@ -491,8 +615,6 @@
 
 
 
-### Viedo 07. Mostrar productos y artículos
-
 
 
 ***
@@ -500,7 +622,7 @@
 
 
 
-### Viedo 07. Maquetar la bbdd
+### Video 07. Maquetar la bbdd
 1. Crear un nuevo modelo y un nuevo diagrama para el proyecto **api.restful** en MySQL Workbench.
 2. Guardar el archivo como **api.codersfree\api.restful.mwb**.
 3. Crear la entidad **categories** con los campos:
