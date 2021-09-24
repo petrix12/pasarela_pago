@@ -2,6 +2,7 @@
 + **URL Curso**: https://www.udemy.com/course/crea-una-pasarela-de-pagos-con-laravel-cashier-y-stripe
 + **URL Repositorio del curso**: https://github.com/coders-free/payment
 + **URL Repositorio General**: https://github.com/petrix12/pasarela_pago.git
++ **URL del proyecto en producción**: https://paymet.herokuapp.com
 
 ## Antes de iniciar:
 1. Crear proyecto en la página de [GitHub](https://github.com) con el nombre: **pasarela_pago**.
@@ -124,11 +125,16 @@
 
 ### Viedo 04. Reutilizar la plantilla Jetstream
 + **URL Documentación Jetstream**: https://jetstream.laravel.com/2.x/introduction.html
-1. Adaptar la plantilla **paymet\resources\views\layouts\app.blade.php** a nuestro proyecto:
+1. Adaptar la plantilla **resources\views\layouts\app.blade.php** a nuestro proyecto:
     ```php
     <!DOCTYPE html>
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
         <head>
+            ≡
+            <title>{{ config('app.name', 'Laravel') }}</title>
+
+            <!-- Icon -->
+            <link  rel="icon"   href="favicon.ico" type="image/png" />
             ≡
         </head>
         <body class="font-sans antialiased">
@@ -149,7 +155,7 @@
         </body>
     </html>
     ```
-2. Adaptar la vista paymet\resources\views\navigation-menu.blade.php a nuestro proyectos:
+2. Adaptar la vista **resources\views\navigation-menu.blade.php** a nuestro proyectos:
     ```php
     @php
         $nav_links = [
@@ -347,29 +353,30 @@
     ```
 3. Publicar las vistas de Jetstream:
     + $ php artisan vendor:publish --tag=jetstream-views
-    + **Nota 1**: las vistas de Jetstream se publicarán en **paymet\resources\views\vendor\jetstream**.
-    + **Nota 2**: en el componente **paymet\resources\views\vendor\jetstream\components\application-mark.blade.php** se puede cambiar el logito de la aplicación.
-4. **Personalización**: El componente **paymet\resources\views\vendor\jetstream\components\application-mark.blade.php** se personalizó con la imagen del proyecto:
+    + **Nota 1**: las vistas de Jetstream se publicarán en **resources\views\vendor\jetstream**.
+    + **Nota 2**: en el componente **resources\views\vendor\jetstream\components\application-mark.blade.php** se puede cambiar el logito de la aplicación.
+4. **Personalización**: El componente **resources\views\vendor\jetstream\components\application-mark.blade.php** se personalizó con la imagen del proyecto:
     ```php
     <img src="{{ asset('assets\images\logo.png') }}" alt="Logo de la empresa" width="40">
     ```
-5. **Personalización**: El componente **paymet\resources\views\vendor\jetstream\components\authentication-card-logo.blade.php** se personalizó con la imagen del proyecto:
+5. **Personalización**: El componente **resources\views\vendor\jetstream\components\authentication-card-logo.blade.php** se personalizó con la imagen del proyecto:
     ```php
     <a href="/">
         <img src="{{ asset('assets\images\logo.png') }}" alt="Logo de la empresa" width="48">
     </a>
     ```
-6. **Personalización**: El componente **paymet\resources\views\vendor\jetstream\components\application-logo.blade.php** se personalizó con la imagen del proyecto:
+6. **Personalización**: El componente **resources\views\vendor\jetstream\components\application-logo.blade.php** se personalizó con la imagen del proyecto:
     ```php
     <img src="{{ asset('assets\images\logo_completo.png') }}" alt="Logo de la empresa" width="120">
     ```
-7. Adaptar las rutas raíz del archivo **paymet\routes\web.php** a nuestro proyecto:
+7. **Personalización**: Reemplazar el favicon de la aplicación por el del proyecto en **public\favicon.ico**
+7. Adaptar las rutas raíz del archivo **routes\web.php** a nuestro proyecto:
     ```php
     Route::get('/', function () {
         return view('welcome');
     })->name('home');
     ```
-8. Extender de la plantilla de Jetstream la vista **paymet\resources\views\welcome.blade.php**:
+8. Extender de la plantilla de Jetstream la vista **resources\views\welcome.blade.php**:
     ```php
     <x-app-layout>
     </x-app-layout>
@@ -380,6 +387,100 @@
     + $ git push -u origin main
 
 ### Viedo 05. Llenar con datos falsos nuestra bbdd
+1. Crear el modelo **Product** con magración, factory y controlador:
+    + $ php artisan make:model Product -mfc
+2. Generar el acceso directo a storage:
+    + $ php artisan storage:link
+3. Cambiar el valor de la siguiente variable de entorno en **.env**:
+    ```
+    APP_NAME=PayMet
+    FILESYSTEM_DRIVER=public
+    ```
+4. Modificar el método **up** de la migración **database\migrations\2021_09_24_201344_create_products_table.php**:
+    ```php
+    public function up()
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('image');
+            $table->text('description');
+            $table->string('price');
+            $table->timestamps();
+        });
+    }
+    ```
+5. Modificar el método **definition** del factory **database\factories\ProductFactory.php**:
+    ```php
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->word(),
+            'image' => 'products/' . $this->faker->image('public/storage/products', 640, 480, null, false),
+            'description' => $this->faker->text(),
+            'price' => $this->faker->randomElement([19, 49, 99])
+        ];
+    }
+    ```
+6. Crear el modelo **Article** con magración, factory y controlador:
+    + $ php artisan make:model Article -mfc
+7. Modificar el método **up** de la migración **database\migrations\2021_09_24_212439_create_articles_table.php**:
+    ```php
+    public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('image');
+            $table->text('extract');
+            $table->longText('body');
+            $table->timestamps();
+        });
+    }
+    ```
+8. Modificar el método **definition** del factory **database\factories\ArticleFactory.php**:
+    ```php
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(),
+            'image' => 'articles/' . $this->faker->image('public/storage/articles', 640, 480, null, false),
+            'extract' => $this->faker->text(),
+            'body' => $this->faker->text(2000)
+        ];
+    }
+    ```
+9. Modificar el método **run** del seeder **database\seeders\DatabaseSeeder.php**:
+    ```php
+    public function run()
+    {
+        // \App\Models\User::factory(10)->create();
+        Storage::deleteDirectory('products');
+        Storage::deleteDirectory('articles');
+
+        Storage::makeDirectory('products');
+        Storage::makeDirectory('articles');
+
+        Product::factory(50)->create();
+        Article::factory(50)->create();
+    }
+    ```
+    + Importar las definiciones de los modelos **Article** y **Product** y el facade **Storage**:
+    ```php
+    use App\Models\Article;
+    use App\Models\Product;
+    use Illuminate\Support\Facades\Storage;
+    ```
+10. Ejecutar nuevamente las migraciones junto a los seeders:
+    + $ php artisan migrate:fresh --seed
+11. Commit Video 05:
+    + $ git add .
+    + $ git commit -m "Commit 05: Llenar con datos falsos nuestra bbdd"
+    + $ git push -u origin main
+
+### Viedo 06. Creando nuestros propios estilos css
+
+
 
 
 ***
@@ -390,7 +491,6 @@
 
 
 
-### Viedo 06. Creando nuestros propios estilos css
 ### Viedo 07. Mostrar productos y artículos
 
 
@@ -460,48 +560,43 @@
 6. Seleccionar el repositorio **pasarela_pago** y presionar el botón **Connect**.
 7. Para tener siempre la ultima actualización de nuestro proyecto se recomienda presionar el botón **Enable Automatic Deploys**.
 8. Presionar el botón Deploy Branch.
-Descargar e instalar Heroku CLI:
-https://devcenter.heroku.com/articles/heroku-cli
-En la terminal iniciar sesión en Heroku:
-$ heroku login
-Víncular con la aplicación de Heroku cvpetrix:
-$ git remote add heroku git.heroku.com/cvpetrix.git
-(git remote set-url Origin git.heroku.com/cvpetrix.git)
-$ heroku git:remote -a cvpetrix
-Registrar variables de entorno de la aplicación desde la terminal:
-$ heroku config:add APP_NAME=CVPetrix
-$ heroku config:add APP_ENV=production
-$ heroku config:add APP_KEY=base64:6FJwS0Ii5P9k5qhEgPrmJ5VcLKkcBgtpci6b/yFlxD0=
-$ heroku config:add APP_DEBUG=true
-$ heroku config:add APP_URL=https://cvpetrix.herokuapp.com/
-Crear base de datos Postgre SQL desde la terminal:
-$ heroku addons:create heroku-postgresql:hobby-dev
-$ heroku pg:credentials:url
-Nota: la salida de la última línea de comando nos servirá para configurar las variables de entorno de la base de datos:
- Connection info string:
- "dbname=db6unq9m90dvkv host=ec2-18-235-4-83.compute-1.amazonaws.com port=5432 user=vcsyvufmsdpbhn password=****** sslmode=require"
- Connection URL:
- postgres://vcsyvufmsdpbhn:220b810793f6f9780ca458b1b4a95c4246b16355166edc319686cdd3712e4cc6@ec2-18-235-4-83.compute-1.amazonaws.com:5432/db6unq9m90dvkv
-Registrar variables de entorno de la base de datos desde la terminal:
-$ heroku config:add DB_CONNECTION=pgsql
-$ heroku config:add DB_HOST=ec2-18-235-4-83.compute-1.amazonaws.com
-$ heroku config:add DB_PORT=5432
-$ heroku config:add DB_DATABASE=db6unq9m90dvkv
-$ heroku config:add DB_USERNAME=vcsyvufmsdpbhn
-$ heroku config:add DB_PASSWORD=******
-Ejecutar migraciones:
-$ heroku run bash
-~ $ php artisan migrate --seed
-~ $ exit
-Salir de Heroku:
-$ heroku logout
-Desconectar con repositorio Heroku:
-$ git remote rm heroku
-Volver a conectar con repositorio GitHub:
-$ git remote add origin https://github.com/petrix12/cvpetrix.git
-$ git push -u origin main
-Actualizar repositorio del proyecto en GitHub
-Ejecutar
-$ git add .
-$ git commit -m "Actualización"
-$ git push -u origin main
+9. Descargar e instalar [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
+10. En la terminal en la raíz del proyecto en local e iniciar sesión en Heroku:
+    + $ heroku login
+11. Víncular con la aplicación de Heroku **paymet**:
+    + $ git remote add heroku git.heroku.com/paymet.git
+        + (git remote set-url Origin git.heroku.com/paymet.git)
+    + $ heroku git:remote -a paymet
+12. Registrar variables de entorno de la aplicación desde la terminal:
+    + $ heroku config:add APP_NAME=PayMet
+    + $ heroku config:add APP_ENV=production
+    + $ heroku config:add APP_KEY=base64:gUVmds1U2u5m126RsiswRYif8dydHe31tUf143J2X58=
+    + $ heroku config:add APP_DEBUG=false
+    + $ heroku config:add APP_URL=https://paymet.herokuapp.com/
+13. Crear base de datos Postgre SQL desde la terminal:
+    + $ heroku addons:create heroku-postgresql:hobby-dev
+    + $ heroku pg:credentials:url
+    + **Nota**: la salida de la última línea de comando nos servirá para configurar las variables de entorno de la base de datos:
+    ```
+    Connection information for default credential.
+    Connection info string:
+    "dbname=*** host=*** port=*** user=*** password=*** sslmode=require"
+    Connection URL:
+    postgres://mmtmzssdyxkfyt:9336263e704b06d0a1ba7c979c426e7d8eb77f3958e4114cea9a21973ba08d84@ec2-35-168-145-180.compute-1.amazonaws.com:5432/dbhkpp3vfen6vd
+    ```
+14. Registrar variables de entorno de la base de datos desde la terminal:
+    + $ heroku config:add DB_CONNECTION=pgsql
+    + $ heroku config:add DB_HOST=ec2-18-235-4-83.compute-1.amazonaws.com
+    + $ heroku config:add DB_PORT=5432
+    + $ heroku config:add DB_DATABASE=db6unq9m90dvkv
+    + $ heroku config:add DB_USERNAME=vcsyvufmsdpbhn
+    + $ heroku config:add DB_PASSWORD=******
+15. Ejecutar migraciones:
+    + $ heroku run bash
+    + ~ $ php artisan migrate --seed
+        + Do you really wish to run this command? (yes/no) [no]: **yes**
+    + ~ $ exit
+16. Salir de Heroku:
+    + $ heroku logout
+17. Desconectar con repositorio Heroku:
+    + $ git remote rm heroku
