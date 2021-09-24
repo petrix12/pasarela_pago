@@ -126,7 +126,28 @@
 + **URL Documentación Jetstream**: https://jetstream.laravel.com/2.x/introduction.html
 1. Adaptar la plantilla **paymet\resources\views\layouts\app.blade.php** a nuestro proyecto:
     ```php
-    ***
+    <!DOCTYPE html>
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        <head>
+            ≡
+        </head>
+        <body class="font-sans antialiased">
+            <x-jet-banner />
+
+            <div class="min-h-screen bg-gray-100">
+                @livewire('navigation-menu')
+
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
+
+            @stack('modals')
+
+            @livewireScripts
+        </body>
+    </html>
     ```
 2. Adaptar la vista paymet\resources\views\navigation-menu.blade.php a nuestro proyectos:
     ```php
@@ -330,7 +351,7 @@
     + **Nota 2**: en el componente **paymet\resources\views\vendor\jetstream\components\application-mark.blade.php** se puede cambiar el logito de la aplicación.
 4. **Personalización**: El componente **paymet\resources\views\vendor\jetstream\components\application-mark.blade.php** se personalizó con la imagen del proyecto:
     ```php
-    <img src="{{ asset('assets\images\logo.png') }}" alt="Logo de la empresa" width="48">
+    <img src="{{ asset('assets\images\logo.png') }}" alt="Logo de la empresa" width="40">
     ```
 5. **Personalización**: El componente **paymet\resources\views\vendor\jetstream\components\authentication-card-logo.blade.php** se personalizó con la imagen del proyecto:
     ```php
@@ -426,3 +447,61 @@
 + $ php artisan clear-compiled
 + $ composer dumpautoload
 
+## Deploy del proyecto en Heroku
+1. Crear en la raíz del proyecto el archivo **Procfile** (sin extensión) para elegir un servidor apache en Heroku y también indicarle la ubicación del archivo incial index.php:
+    ```
+    web: vendor/bin/heroku-php-apache2 paymet/public/
+    ```
+2. Ingresar a [Heroku](https://dashboard.heroku.com/apps) e ir a **Dashboard**.
+3. Crear un nuevo proyecto en **New > Create new app**
+    + Nombre: paymet
+4. Ir a Deploy y dar clic en GitHub.
+5. Clic en el botón Connect to GitHub e ingresar las credenciales.
+6. Seleccionar el repositorio **pasarela_pago** y presionar el botón **Connect**.
+Para tener siempre la ultima actualización de nuestro proyecto se recomienda presionar el botón Enabla Automatic Deploys.
+Presionar el botón Deploy Branch.
+Descargar e instalar Heroku CLI:
+https://devcenter.heroku.com/articles/heroku-cli
+En la terminal iniciar sesión en Heroku:
+$ heroku login
+Víncular con la aplicación de Heroku cvpetrix:
+$ git remote add heroku git.heroku.com/cvpetrix.git
+(git remote set-url Origin git.heroku.com/cvpetrix.git)
+$ heroku git:remote -a cvpetrix
+Registrar variables de entorno de la aplicación desde la terminal:
+$ heroku config:add APP_NAME=CVPetrix
+$ heroku config:add APP_ENV=production
+$ heroku config:add APP_KEY=base64:6FJwS0Ii5P9k5qhEgPrmJ5VcLKkcBgtpci6b/yFlxD0=
+$ heroku config:add APP_DEBUG=true
+$ heroku config:add APP_URL=https://cvpetrix.herokuapp.com/
+Crear base de datos Postgre SQL desde la terminal:
+$ heroku addons:create heroku-postgresql:hobby-dev
+$ heroku pg:credentials:url
+Nota: la salida de la última línea de comando nos servirá para configurar las variables de entorno de la base de datos:
+ Connection info string:
+ "dbname=db6unq9m90dvkv host=ec2-18-235-4-83.compute-1.amazonaws.com port=5432 user=vcsyvufmsdpbhn password=****** sslmode=require"
+ Connection URL:
+ postgres://vcsyvufmsdpbhn:220b810793f6f9780ca458b1b4a95c4246b16355166edc319686cdd3712e4cc6@ec2-18-235-4-83.compute-1.amazonaws.com:5432/db6unq9m90dvkv
+Registrar variables de entorno de la base de datos desde la terminal:
+$ heroku config:add DB_CONNECTION=pgsql
+$ heroku config:add DB_HOST=ec2-18-235-4-83.compute-1.amazonaws.com
+$ heroku config:add DB_PORT=5432
+$ heroku config:add DB_DATABASE=db6unq9m90dvkv
+$ heroku config:add DB_USERNAME=vcsyvufmsdpbhn
+$ heroku config:add DB_PASSWORD=******
+Ejecutar migraciones:
+$ heroku run bash
+~ $ php artisan migrate --seed
+~ $ exit
+Salir de Heroku:
+$ heroku logout
+Desconectar con repositorio Heroku:
+$ git remote rm heroku
+Volver a conectar con repositorio GitHub:
+$ git remote add origin https://github.com/petrix12/cvpetrix.git
+$ git push -u origin main
+Actualizar repositorio del proyecto en GitHub
+Ejecutar
+$ git add .
+$ git commit -m "Actualización"
+$ git push -u origin main
