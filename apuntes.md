@@ -1,5 +1,6 @@
 # Crea una pasarela de pagos con Laravel Cashier y Stripe
-+ **URL Curso**: https://www.udemy.com/course/crea-una-pasarela-de-pagos-con-laravel-cashier-y-stripe/
++ **URL Curso**: https://www.udemy.com/course/crea-una-pasarela-de-pagos-con-laravel-cashier-y-stripe
++ **URL Repositorio del curso**: https://github.com/coders-free/payment
 + **URL Repositorio General**: https://github.com/petrix12/pasarela_pago.git
 
 ## Antes de iniciar:
@@ -36,7 +37,7 @@
         + Laragon Full (64-bit): Apache 2.4, Nginx, MySQL 5.7, PHP 7.4, Redis, Memcached, Node.js 14, npm, git, bitmana…
 3. Instalar el instalador de Laravel:
     + $ composer global require laravel/installer
-4. Extensiones requeridas en Visual Studio Code:
+4. Extensiones requeridas en **Visual Studio Code**:
     + Laravel Blade Snippets
         + Winnie Lin
         + Laravel blade snippets and syntax highlight support
@@ -68,43 +69,30 @@
     + $ git commit -m "Commit 02: Programas necesarios"
     + $ git push -u origin main
 
-
-
-
-
-***
-
-
-
-
-
-
-
-
-
 ### Viedo 03. Creación del proyecto
-### Viedo 04. Reutilizar la plantilla Jetstream
-### Viedo 05. Llenar con datos falsos nuestra bbdd
-### Viedo 06. Creando nuestros propios estilos css
-### Viedo 07. Mostrar productos y artículos
-
-
-
-***
-
-
-
-### Viedo 04. Creación del proyecto
-+ **URL**: https://codersfree.com/blog/como-generar-un-dominio-local-en-windows-xampp
+**URL Codersfree dominio local**: https://codersfree.com/blog/como-generar-un-dominio-local-en-windows-xampp
+**URL Repositorio del curso**: https://github.com/coders-free/payment
 1. Crear proyecto para la API RESTful:
-    + $ laravel new api.codersfree
-2. Abrir el archivo: **C:\Windows\System32\drivers\etc\hosts** como administrador y en la parte final del archivo escribir.
+    + $ laravel new paymet --jet
+    + Which Jetstream stack do you prefer?
+        [0] livewire
+        [1] inertia
+    + Respuesta: **0**
+    + Will your application use teams? (yes/no) [no]: **no**
+    + Ingresar a la carpeta del proyecto:
+        + $ cd paymet
+    + $ npm install
+    + $ npm run dev
+2. Crear base de datos **paymet**.
+3. Ejecutar las migraciones:
+    + $ php artisan migrate
+4. Abrir el archivo: **C:\Windows\System32\drivers\etc\hosts** como administrador y en la parte final del archivo escribir.
 	```
-	127.0.0.1     api.codersfree.test
+	127.0.0.1     paymet.test
 	```
-3. Guardar y cerrar.
-4. Abri el archivo de texto plano de configuración de Apache **C:\xampp\apache\conf\extra\httpd-vhosts.conf**.
-5. Ir al final del archivo y anexar lo siguiente:
+5. Guardar y cerrar.
+6. Abri el archivo de texto plano de configuración de Apache **C:\xampp\apache\conf\extra\httpd-vhosts.conf**.
+7. Ir al final del archivo y anexar lo siguiente:
 	+ Si nunca has creado un virtual host agregar:
 		```conf
 		<VirtualHost *>
@@ -116,19 +104,42 @@
 	+ Luego agregar:
 		```conf
 		<VirtualHost *>
-			DocumentRoot "C:\xampp\htdocs\cursos\24apirestful\api.codersfree\public"
-			ServerName api.codersfree.test
-			<Directory "C:\xampp\htdocs\cursos\24apirestful\api.codersfree\public">
+			DocumentRoot "C:\xampp\htdocs\cursos\26pasarela\paymet\public"
+			ServerName paymet.test
+			<Directory "C:\xampp\htdocs\cursos\26pasarela\paymet\public">
 				Options All
 				AllowOverride All
 				Require all granted
 			</Directory>
 		</VirtualHost>
 		```
-6. Guardar y cerrar.
-7. Reiniciar el servidor Apache.
-    + **Nota 1**: ahora podemos ejecutar nuestro proyecto local en el navegador introduciendo la siguiente dirección: http://api.codersfree.test
+8. Guardar y cerrar.
+9. Reiniciar el servidor Apache.
+    + **Nota 1**: ahora podemos ejecutar nuestro proyecto local en el navegador introduciendo la siguiente dirección: http://paymet.test
     + **Nota 2**: En caso de que no funcione el enlace, cambiar en el archivo **C:\xampp\apache\conf\extra\httpd-vhosts.conf** todos los segmentos de código **<VirtualHost \*>** por **<VirtualHost *:80>**.
+10. Commit Video 03:
+    + $ git add .
+    + $ git commit -m "Commit 03: Creación del proyecto"
+    + $ git push -u origin main
+
+### Viedo 04. Reutilizar la plantilla Jetstream
+
+
+
+
+***
+
+
+
+### Viedo 05. Llenar con datos falsos nuestra bbdd
+### Viedo 06. Creando nuestros propios estilos css
+### Viedo 07. Mostrar productos y artículos
+
+
+
+***
+
+
 
 
 ### Viedo 07. Maquetar la bbdd
@@ -168,8 +179,7 @@
 
 
 ## Repositorios de interes:
-+ https://github.com/coders-free/api.codersfree
-+ https://github.com/coders-free/cliente1
++ https://github.com/coders-free/payment
 
 ## Para limpiar configuración y reestablecer el cache:
 + $ php artisan config:clear   
