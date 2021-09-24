@@ -1,6 +1,6 @@
-# Aprende a crear una API RESTful con Laravel
+# Crea una pasarela de pagos con Laravel Cashier y Stripe
 + **URL Curso**: https://www.udemy.com/course/crea-una-pasarela-de-pagos-con-laravel-cashier-y-stripe/
-+ **URL Repositorio General**: ***
++ **URL Repositorio General**: https://github.com/petrix12/pasarela_pago.git
 
 ## Antes de iniciar:
 1. Crear proyecto en la página de [GitHub](https://github.com) con el nombre: **pasarela_pago**.
@@ -11,17 +11,27 @@
     + $ git add .
     + $ git commit -m "Commit 00: Antes de iniciar"
     + $ git branch -M main
-    + $ git remote add origin https://github.com/petrix12/apirestful_laravel8.git
+    + $ git remote add origin https://github.com/petrix12/pasarela_pago.git
     + $ git push -u origin main
 
 ## Sección 1: Introducción
 
 ### Viedo 01. Introducción
-+ **Contenido**: ***.
++ **Contenido**: Explicación del proyecto a realizar.
++ **URL YouTube**: https://www.youtube.com/watch?v=NShQvNDuUwU&t=16s
 1. Commit Video 01:
     + $ git add .
     + $ git commit -m "Commit 01: Introducción"
     + $ git push -u origin main
+
+
+
+***
+
+
+
+
+
 
 ### Viedo 02. Programas necesarios
 ### Viedo 03. Creación del proyecto
