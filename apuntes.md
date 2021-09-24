@@ -104,9 +104,9 @@
 	+ Luego agregar:
 		```conf
 		<VirtualHost *>
-			DocumentRoot "C:\xampp\htdocs\cursos\26pasarela\paymet\public"
+			DocumentRoot "C:\xampp\htdocs\cursos\26pasarela\public"
 			ServerName paymet.test
-			<Directory "C:\xampp\htdocs\cursos\26pasarela\paymet\public">
+			<Directory "C:\xampp\htdocs\cursos\26pasarela\public">
 				Options All
 				AllowOverride All
 				Require all granted
@@ -450,7 +450,7 @@
 ## Deploy del proyecto en Heroku
 1. Crear en la raíz del proyecto el archivo **Procfile** (sin extensión) para elegir un servidor apache en Heroku y también indicarle la ubicación del archivo incial index.php:
     ```
-    web: vendor/bin/heroku-php-apache2 paymet/public/
+    web: vendor/bin/heroku-php-apache2 public/
     ```
 2. Ingresar a [Heroku](https://dashboard.heroku.com/apps) e ir a **Dashboard**.
 3. Crear un nuevo proyecto en **New > Create new app**
@@ -458,8 +458,8 @@
 4. Ir a Deploy y dar clic en GitHub.
 5. Clic en el botón Connect to GitHub e ingresar las credenciales.
 6. Seleccionar el repositorio **pasarela_pago** y presionar el botón **Connect**.
-Para tener siempre la ultima actualización de nuestro proyecto se recomienda presionar el botón Enabla Automatic Deploys.
-Presionar el botón Deploy Branch.
+7. Para tener siempre la ultima actualización de nuestro proyecto se recomienda presionar el botón **Enable Automatic Deploys**.
+8. Presionar el botón Deploy Branch.
 Descargar e instalar Heroku CLI:
 https://devcenter.heroku.com/articles/heroku-cli
 En la terminal iniciar sesión en Heroku:
