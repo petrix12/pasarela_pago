@@ -24,6 +24,52 @@
     + $ git commit -m "Commit 01: Introducción"
     + $ git push -u origin main
 
+### Viedo 02. Programas necesarios
+1. Programas requeridos:
+    + [Git](https://git-scm.com/downloads)
+    + [XAMPP](https://www.apachefriends.org/es/download.html)
+    + [Composer](https://getcomposer.org)
+    + [Visual Studio Code](https://code.visualstudio.com/download)
+    + [Node Js](https://nodejs.org)
+2. Otra opción podría ser Laragon ya que instala todos los programas mencionados anteriormente:
+    + [Laragon](https://laragon.org/download/index.html)
+        + Laragon Full (64-bit): Apache 2.4, Nginx, MySQL 5.7, PHP 7.4, Redis, Memcached, Node.js 14, npm, git, bitmana…
+3. Instalar el instalador de Laravel:
+    + $ composer global require laravel/installer
+4. Extensiones requeridas en Visual Studio Code:
+    + Laravel Blade Snippets
+        + Winnie Lin
+        + Laravel blade snippets and syntax highlight support
+    + Laravel goto view
+        + codingyu
+        + Quick jump to view
+    + Laravel Snippets
+        + Winnie Lin
+        + Laravel snippets for Visual Studio Code (Support Laravel 5 and above)
+    + PHP Intelephense
+        + Ben Mewburn
+        + PHP code intelligence for Visual Studio Code
+    + Tailwind CSS IntelliSense
+        + Brad Cornes
+        + Intelligent Tailwind CSS tooling for VS Code
+5. Aumentar la memoria límite de PHP para evitar errores en la instalación de paquetes:
+    + Abrir el archivo **C:\xampp\php\php.ini**.
+    + Cambiar el valor:
+      + De:
+        ```ini
+        memory_limit=512M
+        ```
+      + A:
+        ```ini
+        memory_limit=-1
+        ```
+6. Commit Video 02:
+    + $ git add .
+    + $ git commit -m "Commit 02: Programas necesarios"
+    + $ git push -u origin main
+
+
+
 
 
 ***
@@ -33,7 +79,9 @@
 
 
 
-### Viedo 02. Programas necesarios
+
+
+
 ### Viedo 03. Creación del proyecto
 ### Viedo 04. Reutilizar la plantilla Jetstream
 ### Viedo 05. Llenar con datos falsos nuestra bbdd
@@ -44,22 +92,6 @@
 
 ***
 
-1. Programas requeridos:
-    + [XAMPP](https://www.apachefriends.org/es/download.html)
-    + [Node Js](https://nodejs.org)
-    + [Composer](https://getcomposer.org)
-    + [Visual Studio Code](https://code.visualstudio.com/download)
-    + [Git](https://git-scm.com/downloads)
-    + [MySQL Workbench](https://dev.mysql.com/downloads/workbench)
-2. Otra opción podría ser Laragon ya que instala todos los programas mencionados anteriormente:
-    + [Laragon](https://laragon.org/download/index.html)
-        + Laragon Full (64-bit): Apache 2.4, Nginx, MySQL 5.7, PHP 7.4, Redis, Memcached, Node.js 14, npm, git, bitmana…
-3. Instalar el instalador de Laravel:
-    + $ composer global require laravel/installer
-4. Commit Video 02:
-    + $ git add .
-    + $ git commit -m "Commit 02: Programas necesarios"
-    + $ git push -u origin main
 
 
 ### Viedo 04. Creación del proyecto
