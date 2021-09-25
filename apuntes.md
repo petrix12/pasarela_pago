@@ -794,15 +794,10 @@
         CASHIER_CURRENCY=eur
         ```
         + **Nota**: por defecto es el dólar.
-4. Commit Video 08:
+4. Commit Video 09:
     + $ git add .
-    + $ git commit -m "Crear una cuenta en Stripe"
+    + $ git commit -m "Commit 09: Instalar Laravel Cashier"
     + $ git push -u origin main
-
-### Video 09. Instalar Laravel Cashier
-
-
-
 
 ### Video 10. Crear clientes en Stripe
 
