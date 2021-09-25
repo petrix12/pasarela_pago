@@ -800,6 +800,35 @@
     + $ git push -u origin main
 
 ### Video 10. Crear clientes en Stripe
+1. Modificar el método **create** del controlador **app\Actions\Fortify\CreateNewUser.php**:
+    ```php
+    public function create(array $input)
+    {
+        ≡
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+        ]);
+
+        // Registrar al usuario en la plataforma de Stripe
+        $user->createAsStripeCustomer();
+
+        return $user;
+    }
+    ```
+2. Commit Video 10:
+    + $ git add .
+    + $ git commit -m "Commit 10: Crear clientes en Stripe"
+    + $ git push -u origin main
+
+## Sección 3: Métodos de pago
+
+### Video 11. Agregar métodos de pago
+### Video 12. Agregar un spinner
+### Video 13. Mostrar el listado de métodos de pago agregados
+### Video 14. Eliminar método de pago
+### Video 15. Elegir método de pago predeterminado
 
 
 
