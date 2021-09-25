@@ -73,7 +73,7 @@
 ### Video 03. Creación del proyecto
 **URL Codersfree dominio local**: https://codersfree.com/blog/como-generar-un-dominio-local-en-windows-xampp
 **URL Repositorio del curso**: https://github.com/coders-free/payment
-1. Crear proyecto para la API RESTful:
+1. Crear proyecto para la **Pasarela de Pago**:
     + $ laravel new paymet --jet
     + Which Jetstream stack do you prefer?
         [0] livewire
@@ -825,7 +825,246 @@
 ## Sección 3: Métodos de pago
 
 ### Video 11. Agregar métodos de pago
+1. Crear el controlador **BillingController**:
+    + $ php artisan make:controller BillingController
+2. Crear ruta get 
+    ```php
+    Route::get('billing', [BillingController::class, 'index'])->middleware('auth')->name('billing.index');
+    ```
+    + Importar la definición del controlador **BillingController**:
+    ```php
+    use App\Http\Controllers\BillingController;
+    ```
+3. Definir el método **index** del controlador **app\Http\Controllers\BillingController.php**:
+    ```php
+    public function index(){
+        return view('billing.index');
+    }
+    ```
+4. Crear la vista **resources\views\billing\index.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="pb-12">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                @livewire('payment-method-create')
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+5. Incluir el menú **Facturación** en **resources\views\navigation-menu.blade.php**:
+    ```php
+    ≡
+    <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow">
+        <!-- Primary Navigation Menu -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                ≡
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <!-- Teams Dropdown -->
+                    ≡
+                    <!-- Settings Dropdown -->
+                    <div class="ml-3 relative">
+                        @auth
+                            <x-jet-dropdown align="right" width="48">
+                                ≡
+                                <x-slot name="content">
+                                    <!-- Account Management -->
+                                    ≡
+                                    <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                                        {{ __('Profile') }}
+                                    </x-jet-dropdown-link>
+
+                                    <x-jet-dropdown-link href="{{ route('billing.index') }}">
+                                        Facturación
+                                    </x-jet-dropdown-link>
+                                    ≡
+                                    <!-- Authentication -->
+                                    ≡
+                                </x-slot>
+                            </x-jet-dropdown>
+                        @else
+                            ≡
+                        @endauth
+                    </div>
+                </div>
+                <!-- Hamburger -->
+                ≡
+            </div>
+        </div>
+
+        <!-- Responsive Navigation Menu -->
+        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+            ≡
+            <!-- Responsive Settings Options -->
+            @auth
+                <div class="pt-4 pb-1 border-t border-gray-200">
+                    ≡
+                    <div class="mt-3 space-y-1">
+                        <!-- Account Management -->
+                        <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                            {{ __('Profile') }}
+                        </x-jet-responsive-nav-link>
+
+                        <x-jet-responsive-nav-link href="{{ route('billing.index') }}" :active="request()->routeIs('billing.index')">
+                            Facturación
+                        </x-jet-responsive-nav-link>
+                        ≡
+                        <!-- Authentication -->
+                        ≡
+                        <!-- Team Management -->
+                        ≡
+                    </div>
+                </div>
+            @else
+                <div class="py-1 border-t border-gray-200">
+                    ≡            
+                </div>
+            @endauth
+        </div>
+    </nav>
+    ```
+6. Crear componente de livewire **PaymentMethodCreate**:
+    + $ php artisan make:livewire PaymentMethodCreate
+7. Redefinir el controlador **app\Http\Livewire\PaymentMethodCreate.php**:
+    ```php
+    <?php
+
+    namespace App\Http\Livewire;
+
+    use Livewire\Component;
+
+    class PaymentMethodCreate extends Component
+    {
+        protected $listeners = ['paymentMethodCreate' => 'paymentMethodCreate'];
+
+        public function render()
+        {
+            return view('livewire.payment-method-create', [
+                'intent' => auth()->user()->createSetupIntent()
+            ]);
+        }
+
+        public function paymentMethodCreate($paymentMethod){
+            auth()->user()->addPaymentMethod($paymentMethod);
+        }
+    }
+    ```
+8. Diseñar vista **resources\views\livewire\payment-method-create.blade.php**:
+    ```php
+    <div>   
+        <article class="card">
+            <form action="" id="card-form">
+                <div class="card-body">
+
+                    <h1 class="text-gray-700 text-lg font-bold mb-4">Agregar método de pago</h1>
+                    
+                    <div class="flex">
+                        <p class="text-gray-700">Información de tarjeta</p>
+                        <div class="flex-1 ml-6">
+                            <div class="form-group">
+                                <input class="form-control" id="card-holder-name" type="text"
+                                    placeholder="Nombre del titular de la tarjeta" required>
+                            </div>
+
+                            <!-- Stripe Elements Placeholder -->
+                            <div>
+                                <div class="form-control" id="card-element"></div>
+
+                                <span class="invalid-feedback" id="cardErrors"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-gray-50 flex justify-end">
+                    <button class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">
+                        Update Payment Method
+                    </button>
+                </div>
+            </form>
+        </article>
+
+        @slot('js')
+            <script>
+                document.addEventListener('livewire:load', function(){
+                    stripe();
+                })
+                Livewire.on('resetStripe', function(){
+                    document.getElementById('card-form').reset();
+                    stripe();
+                });
+            </script>
+            <script>
+                function stripe(){
+                    const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
+                    const elements = stripe.elements();
+                    const cardElement = elements.create('card');
+                    cardElement.mount('#card-element');
+                    //Generar token
+                    const cardHolderName = document.getElementById('card-holder-name');
+                    const cardButton = document.getElementById('card-button');
+                    const cardForm = document.getElementById('card-form');
+                    const clientSecret = cardButton.dataset.secret;
+                    cardForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const {
+                            setupIntent,
+                            error
+                        } = await stripe.confirmCardSetup(
+                            clientSecret, {
+                                payment_method: {
+                                    card: cardElement,
+                                    billing_details: {
+                                        name: cardHolderName.value
+                                    }
+                                }
+                            }
+                        );
+                        if (error) {
+                            
+                            document.getElementById('cardErrors').textContent = error.message;
+                        } else {
+                            
+                            Livewire.emit('paymentMethodCreate', setupIntent.payment_method);
+                        }
+                    });
+                }
+            </script>
+        @endslot
+    </div>
+    ```
+    + [Código tomado de la documentación](https://laravel.com/docs/8.x/billing): Payment Methods For Subscriptions
+9. Incluir la librería de **Stripe** y los slot **css** y **js** en la plantilla principal **resources\views\layouts\app.blade.php**:
+    ```php
+    <!DOCTYPE html>
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        <head>
+            ≡
+            <!-- Stripe -->
+            <script src="https://js.stripe.com/v3/"></script>
+
+            @isset($css)
+                {{ $css }}
+            @endisset
+        </head>
+        <body class="font-sans antialiased">
+            ≡
+            @isset($js)
+                {{ $js }}
+            @endisset
+        </body>
+    </html>
+    ```
+10. Commit Video 11:
+    + $ git add .
+    + $ git commit -m "Commit 11: Agregar métodos de pago"
+    + $ git push -u origin main
+
 ### Video 12. Agregar un spinner
+
+
+
 ### Video 13. Mostrar el listado de métodos de pago agregados
 ### Video 14. Eliminar método de pago
 ### Video 15. Elegir método de pago predeterminado
