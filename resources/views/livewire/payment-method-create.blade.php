@@ -1,9 +1,8 @@
-<div>   
+<div>
     <article class="card relative">
-
-        {{-- <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
+        <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
             <x-spinner size="20" />
-        </div> --}}
+        </div>
 
         <form action="" id="card-form">
             <div class="card-body">

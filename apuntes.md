@@ -987,15 +987,6 @@
 
         @slot('js')
             <script>
-                document.addEventListener('livewire:load', function(){
-                    stripe();
-                })
-                Livewire.on('resetStripe', function(){
-                    document.getElementById('card-form').reset();
-                    stripe();
-                });
-            </script>
-            <script>
                 function stripe(){
                     const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
                     const elements = stripe.elements();
@@ -1062,10 +1053,126 @@
     + $ git push -u origin main
 
 ### Video 12. Agregar un spinner
++ **URL Tailwind Componente spinner**: https://tailwindcomponents.com/component/spinner
+1. Crear archivo de estilos resources\css\spinner.css:
+    ```css
+    .loader {
+        border-top-color: #3498db;
+        -webkit-animation: spinner 1.5s linear infinite;
+        animation: spinner 1.5s linear infinite;
+    }
 
+    @-webkit-keyframes spinner {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
 
+    @keyframes spinner {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    ```
+2. Importar el nuevo estilo en **resources\css\app.css**:
+    ```php
+    @import 'tailwindcss/base';
+    @import 'tailwindcss/components';
+    @import 'tailwindcss/utilities';
+
+    @import "buttons.css";
+    @import "cards.css";
+    @import "container.css";
+    @import "forms.css";
+    @import "spinner.css";
+    ```
+3. Compilar nuevamente para agregar los nuevos estilos css:
+    + $ npm run dev
+4. Crear componente blade **resources\views\components\spinner.blade.php**:
+    ```php
+    @props(['size' => '64'])
+    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-{{ $size }} w-{{ $size }}"></div>
+    ```
+5. Modificar vista **resources\views\livewire\payment-method-create.blade.php**:
+    ```php
+    <div>
+        <article class="card relative">
+            <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
+                <x-spinner size="20" />
+            </div>
+
+            <form action="" id="card-form">
+                ≡
+            </form>
+        </article>
+
+        @slot('js')
+            <script>
+                document.addEventListener('livewire:load', function(){
+                    stripe();
+                })
+                Livewire.on('resetStripe', function(){
+                    document.getElementById('card-form').reset();
+                    stripe();
+                });
+            </script>
+            <script>
+                function stripe(){
+                    const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
+                    const elements = stripe.elements();
+                    const cardElement = elements.create('card');
+                    cardElement.mount('#card-element');
+                    //Generar token
+                    const cardHolderName = document.getElementById('card-holder-name');
+                    const cardButton = document.getElementById('card-button');
+                    const cardForm = document.getElementById('card-form');
+                    const clientSecret = cardButton.dataset.secret;
+                    cardForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const {
+                            setupIntent,
+                            error
+                        } = await stripe.confirmCardSetup(
+                            clientSecret, {
+                                payment_method: {
+                                    card: cardElement,
+                                    billing_details: {
+                                        name: cardHolderName.value
+                                    }
+                                }
+                            }
+                        );
+                        if (error) {
+                            
+                            document.getElementById('cardErrors').textContent = error.message;
+                        } else {
+                            
+                            Livewire.emit('paymentMethodCreate', setupIntent.payment_method);
+                        }
+                    });
+                }
+            </script>
+        @endslot
+    </div>
+    ```
+6. Modificar el método **render** del controlador **app\Http\Livewire\PaymentMethodCreate.php**:
+    ```php
+    public function render()
+    {
+        $this->emit('resetStripe');
+        
+        return view('livewire.payment-method-create', [
+            'intent' => auth()->user()->createSetupIntent()
+        ]);
+    }
+    ```
+7. Commit Video 12:
+    + $ git add .
+    + $ git commit -m "Commit 12: Agregar un spinner"
+    + $ git push -u origin main
 
 ### Video 13. Mostrar el listado de métodos de pago agregados
+
+
+
 ### Video 14. Eliminar método de pago
 ### Video 15. Elegir método de pago predeterminado
 

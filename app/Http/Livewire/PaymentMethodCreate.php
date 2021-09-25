@@ -10,6 +10,8 @@ class PaymentMethodCreate extends Component
 
     public function render()
     {
+        $this->emit('resetStripe');
+        
         return view('livewire.payment-method-create', [
             'intent' => auth()->user()->createSetupIntent()
         ]);
