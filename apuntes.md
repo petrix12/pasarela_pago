@@ -744,6 +744,14 @@
 ## Sección 2: Preparar el proyecto para recibir pagos
 
 ### Video 08. Crear una cuenta en Stripe
+1. Crear cuenta en Stripe:
+    + https://dashboard.stripe.com/register
+    + **Nota**: escoger Estados Unidos como país, ya que no aparacen para escoger casi ningún país de latinoamerica.
+2. Commit Video 08:
+    + $ git add .
+    + $ git commit -m "Crear una cuenta en Stripe"
+    + $ git push -u origin main
+
 ### Video 09. Instalar Laravel Cashier
 ### Video 10. Crear clientes en Stripe
 
