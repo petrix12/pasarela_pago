@@ -749,10 +749,61 @@
     + **Nota**: escoger Estados Unidos como país, ya que no aparacen para escoger casi ningún país de latinoamerica.
 2. Commit Video 08:
     + $ git add .
+    + $ git commit -m "Commit 08: Crear una cuenta en Stripe"
+    + $ git push -u origin main
+
+### Video 09. Instalar Laravel Cashier
++ **URL Documentación Laravel Cashier**: https://laravel.com/docs/8.x/billing
+1. Instalar Laravel Cashier:
+    + $ composer require laravel/cashier
+    + $ php artisan migrate
+2. Agregar el trait **Billable** al modelo **app\Models\User.php**:
+    ```php
+    ≡
+    use Laravel\Cashier\Billable;
+
+    class User extends Authenticatable
+    {
+        use HasApiTokens;
+        use HasFactory;
+        use HasProfilePhoto;
+        use Notifiable;
+        use TwoFactorAuthenticatable;
+        use Billable;
+        ≡
+    }
+    ```
+3. Agregar las credenciales de la cuenta de Stripe en **.env**:
+    ```env
+    ≡
+    STRIPE_KEY=your-stripe-key
+    STRIPE_SECRET=your-stripe-secret
+    ```
+    + **Obtener credenciales para el proyecto en desarrollo**: 
+        + Hacer login en la página de [Stripe](https://stripe.com/es-us).
+        + Ir a **Desarrolladores**.
+        + Ir a **Claves de API**.
+            + La **Clave publicable** corresponde a **STRIPE_KEY**.
+            + La **Clave secreta** corresponde a **STRIPE_SECRET**.
+    + **Obtener credenciales para el proyecto en producción**:
+        + Activar cuenta en Stripe para que se generen nuevos tokens.
+    + **Para espcificar la moneda de cobro**:
+        + Agregar la siguiente variable de entorno en **.env**:
+        ```env
+        ≡
+        CASHIER_CURRENCY=eur
+        ```
+        + **Nota**: por defecto es el dólar.
+4. Commit Video 08:
+    + $ git add .
     + $ git commit -m "Crear una cuenta en Stripe"
     + $ git push -u origin main
 
 ### Video 09. Instalar Laravel Cashier
+
+
+
+
 ### Video 10. Crear clientes en Stripe
 
 
