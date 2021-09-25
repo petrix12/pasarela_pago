@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import 'buttons.css';
-@import 'cards.css';
-@import 'container.css';
-@import 'forms.css';
+@import "buttons.css";
+@import "cards.css";
+@import "container.css";
+@import "forms.css";

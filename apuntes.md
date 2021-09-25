@@ -604,6 +604,148 @@
     + $ git push -u origin main
 
 ### Video 07. Mostrar productos y artículos
+1. Redefinir la ruta raíz de la aplicación en el archivo de rutas **routes\web.php**:
+    ```php
+    Route::get('/', [ProductController::class, 'index'])->name('home');
+    ```
+    + Importar la definición del controlador **ProductController**:
+    ```php
+    use App\Http\Controllers\ProductController;
+    ```
+2. Crear el método **index** en el controlador **app\Http\Controllers\ProductController.php**:
+    ```php
+    public function index(){
+        $products = Product::paginate(9);
+        return view('welcome', compact('products'));
+    }
+    ```
+    + Importar la definición del modelo **Product**:
+    ```php
+    use App\Models\Product;
+    ```
+3. Diseñar la vista **resources\views\welcome.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="container py-10">
+            <div class="grid grid-cols-3 gap-6">
+                @foreach ($products as $product)
+                    <div class="card">
+                        <div class="px-4 py-2 bg-gray-900 flex justify-between items-center">
+                            <p class="text-gray-200 font-bold text-xl">{{ $product->price }} USD</p>
+                            <a href="" class="btn btn-secondary">Comprar</a>
+                        </div>
+                        <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="Imagen del producto">
+                        <div class="card-body">
+                            <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
+                            <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="mt-6">
+                    {{ $products->links() }}
+                </div>
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+4. Crear rutas **get articles** en **routes\web.php**:
+    ```php
+    Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+    ```
+    + Importar la definición del controlador **ArticleController**:
+    ```php
+    use App\Http\Controllers\ArticleController;
+    ```
+5. Definir el método **index** en el controlador **app\Http\Controllers\ArticleController.php**:
+    ```php
+    public function index(){
+        $articles = Article::paginate(4);
+        return view('articles.index', compact('articles'));
+    }
+    ```
+    + Importar la definición del modelo **Article**:
+    ```php
+    use App\Models\Article;
+    ```
+6. Crear la vista **resources\views\articles\index.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12">
+            @foreach ($articles as $article)
+                <article class="card mb-6">
+
+                    <img class="h-72 w-full object-cover object-center" src="{{Storage::url($article->image)}}" alt="Imagen del artículo">
+
+                    <div class="card-body">
+                        <h1 class="font-bold text-xl mb-2">
+                            <a href="{{route('articles.show', $article)}}">{{$article->title}}</a>
+                        </h1>
+
+                        <div class="text-gray-700">
+                            {{$article->extract}}
+                        </div>
+                    </div>
+                </article>
+            @endforeach
+            {{$articles->links()}}
+        </div>
+    </x-app-layout>
+    ```
+7. Incluir la vista Article en resources\views\navigation-menu.blade.php:
+    ```php
+    @php
+        $nav_links = [
+            [
+                'name' => 'Principal',
+                'route' => route('home'),
+                'active' => request()->routeIs('home')
+            ],
+            [
+                'name' => 'Artículos',
+                'route' => route('articles.index'),
+                'active' => request()->routeIs('articles.*')
+            ],
+        ];
+    @endphp
+    ≡
+    ```
+8. Definir el método **show** en el controlador **app\Http\Controllers\ArticleController.php**:
+    ```php
+    public function show(Article $article){
+        return view('articles.show', compact($article));
+    }
+    ```
+9. Crear la vista **resources\views\articles\show.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12">
+            <h1 class="text-4xl font-bold text-gray-600">{{$article->title}}</h1>
+
+            <div class="text-lg text-gray-500 mb-2">
+                {{$article->extract}}
+            </div>
+
+            <figure>
+                <img class="h-80 w-full object-cover object-center" src="{{Storage::url($article->image)}}" alt="Imagen del artículo">
+            </figure>
+
+            <div class="text-gray-500 mt-4">
+                {{$article->body}}
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+10. Commit Video 07:
+    + $ git add .
+    + $ git commit -m "Commit 07: Mostrar productos y artículos"
+    + $ git push -u origin main
+
+## Sección 2: Preparar el proyecto para recibir pagos
+
+### Video 08. Crear una cuenta en Stripe
+### Video 09. Instalar Laravel Cashier
+### Video 10. Crear clientes en Stripe
 
 
 
@@ -612,49 +754,6 @@
     ```php
     ***
     ```
-
-
-
-
-
-***
-
-
-
-
-### Video 07. Maquetar la bbdd
-1. Crear un nuevo modelo y un nuevo diagrama para el proyecto **api.restful** en MySQL Workbench.
-2. Guardar el archivo como **api.codersfree\api.restful.mwb**.
-3. Crear la entidad **categories** con los campos:
-    + id
-    + name
-    + slug
-4. Crear la entidad **posts** con los campos:
-    + id
-    + name
-    + slug
-    + extract
-    + body
-    + status
-5. Crear la entidad **users** con los campos:
-    + id
-    + name
-    + email
-    + password
-6. Crear la entidad **tags** con los campos:
-    + id
-    + name
-    + slug
-7. Generar relación 1:n entre **categories** y **posts**.
-8. Generar relación 1:n entre **users** y **posts**.
-9. Crear tabla **post_tag** para generar una relación de n:m entre **posts** y **tags**.
-10. Generar relación 1:n entre **posts** y **post_tag**.
-11. Generar relación 1:m entre **tags** y **post_tag**.
-12. Renombrar todas las llaves foráneas para seguir las convenciones de Laravel.
-13. Commit Video 07:
-    + $ git add .
-    + $ git commit -m "Commit 07: Registro de usuarios"
-    + $ git push -u origin main
 
 
 
