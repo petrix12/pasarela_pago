@@ -1358,9 +1358,36 @@
 ## Sección 4: Suscripciones
 
 ### Video 16. Crear suscripciones en Stripe
-
+1. Ingresar a nuestra cuenta en [Stripe](https://stripe.com/es-us)
+2. Ir a **Productos** y luego hacer clic en **+ Añadir producto**:
+    + Información del producto:
+        + Datos del producto:
+            + Nombre: Servicios Sefar Universal
+        + Información sobre precios:
+            + Modelo de tarifas: Tarifas estándar
+            + Precio: 9.99 USD
+                + Recurrente
+            + Periodo de facturación: Cada mes
+            + Precionar: **+ Añadir otro precio**
+            + Modelo de tarifas: Tarifas estándar
+            + Precio: 19.99 USD
+                + Recurrente
+            + Periodo de facturación: Cada 3 meses
+            + Precionar: **+ Añadir otro precio**
+            + Modelo de tarifas: Tarifas estándar
+            + Precio: 89.99 USD
+                + Recurrente
+            + Periodo de facturación: Cada año
+        + Precionar: **Guardar producto**
+3. Commit Video 16:
+    + $ git add .
+    + $ git commit -m "Commit 16: Crear suscripciones en Stripe"
+    + $ git push -u origin main
 
 ### Video 17. Incluir suscripciones en nuestra plataforma
+
+
+
 ### Video 18. Iniciar suscripcion
 ### Video 19. Cambiar de plan
 ### Video 20. Cancelar y reanudar suscripción
