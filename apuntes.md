@@ -1206,6 +1206,91 @@
     + $ git push -u origin main
 
 ### Video 14. Eliminar método de pago
+1. Descargar la librería de **fontawesome css** y pegarla en **public\vendor\fontawesome**.
+2. Incluir la librería en el proyecto principal en **resources\views\layouts\app.blade.php**:
+    ```php
+    <!DOCTYPE html>
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        <head>
+            ≡
+
+            <!-- Styles -->
+            <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+            <!-- fontawesome -->
+            <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">
+            ≡
+        </head>
+        <body class="font-sans antialiased">
+            ≡
+        </body>
+    </html>
+    ```
+    + **Nota**: desde ahora podemos usar todos los iconos de **fontawesome**.
+3. Modificar la vista **resources\views\livewire\payment-method-list.blade.php**:
+    ```php
+    <div>
+        <section class="card relative">
+            <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
+                <x-spinner size="20" />
+            </div>
+
+            <div class="px-6 py-4 bg-gray-50">
+                <h1 class="text-gray-700 text-lg font-bold">Métodos de pago agregado</h1>
+            </div>
+
+            <div class="card-body divide-y divide-gray-200">
+                @foreach ($paymentMethods as $paymentMethod)
+                    <article class="text-sm text-gray-700 py-2 flex justify-between items-center">
+                        <div>
+                            <h1><span class="font-bold">{{ $paymentMethod->billing_details->name }}</span> XXXX-{{ $paymentMethod->card->last4 }}</h1>
+                            <p>Expira: {{ $paymentMethod->card->exp_month }}/{{ $paymentMethod->card->exp_year }}</p>
+                        </div>
+                        <div>
+                            {{-- <i class="fas fa-star cursor-pointer p-3 hover:text-gray-700" wire:click="defaultPaymentMethod('{{$paymentMethod->id}}')"></i> --}}
+                            <i class="fas fa-trash cursor-pointer p-3 hover:text-gray-700" wire:click="deletePaymentMethod('{{$paymentMethod->id}}')"></i>                      
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </section>
+    </div>
+    ```
+4. Modificar el controlador **app\Http\Livewire\PaymentMethodList.php**:
+    ```php
+    ≡
+    class PaymentMethodList extends Component
+    {
+        protected $listeners = ['render'];
+
+        public function render()
+        {
+            ≡
+        }    
+        
+        public function deletePaymentMethod($paymentMethodId){
+            $paymentMethod = auth()->user()->findPaymentMethod($paymentMethodId);
+            $paymentMethod->delete();
+        }
+    }
+    ```
+5. Modificar el controlador **app\Http\Livewire\PaymentMethodCreate.php**:
+    ```php
+    ≡
+    class PaymentMethodCreate extends Component
+    {
+        ≡
+        public function paymentMethodCreate($paymentMethod){
+            ≡
+            $this->emitTo('payment-method-list', 'render');
+        }
+    }
+    ```
+6. Commit Video 14:
+    + $ git add .
+    + $ git commit -m "Commit 14: Eliminar método de pago"
+    + $ git push -u origin main
+
 ### Video 15. Elegir método de pago predeterminado
 
 
