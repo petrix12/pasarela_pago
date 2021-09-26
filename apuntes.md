@@ -1292,6 +1292,80 @@
     + $ git push -u origin main
 
 ### Video 15. Elegir método de pago predeterminado
++ **URL con tarjetas de prueba**: https://stripe.com/docs/testing
+1. Modificar la vista **resources\views\livewire\payment-method-list.blade.php**:
+    ```php
+    <div>
+        <section class="card relative">
+            <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
+                <x-spinner size="20" />
+            </div>
+
+            <div class="px-6 py-4 bg-gray-50">
+                <h1 class="text-gray-700 text-lg font-bold">Métodos de pago agregado</h1>
+            </div>
+
+            <div class="card-body divide-y divide-gray-200">
+                @forelse ($paymentMethods as $paymentMethod)
+                    <article class="text-sm text-gray-700 py-2 flex justify-between items-center">
+                        <div>
+                            <h1><span class="font-bold">{{$paymentMethod->billing_details->name}}</span> XXXX-{{$paymentMethod->card->last4}}
+                                @if ($paymentMethod->id == auth()->user()->defaultPaymentMethod()->id)
+                                    (default)
+                                @endif
+                            </h1>
+                            <p>Expira: {{ $paymentMethod->card->exp_month }}/{{ $paymentMethod->card->exp_year }}</p>
+                        </div>
+                        <div class="grid grid-cols-2 border border-gray-200 rounded text-gray-500 divide-x divide-gray-200">                       
+                            @unless ($paymentMethod->id == auth()->user()->defaultPaymentMethod()->id)
+                                <i class="fas fa-star cursor-pointer p-3 hover:text-gray-700" wire:click="defaultPaymentMethod('{{$paymentMethod->id}}')"></i>
+                                <i class="fas fa-trash cursor-pointer p-3 hover:text-gray-700" wire:click="deletePaymentMethod('{{$paymentMethod->id}}')"></i>                      
+                            @endunless
+                        </div>
+                    </article>
+                @empty
+                    <article class="p-2">
+                        <h1 class="text-sm text-gray-700">No cuenta con ningún método de pago</h1>
+                    </article>
+                @endforelse
+            </div>
+        </section>
+    </div>
+    ```
+2. Agragar el método **defaultPaymentMethod** en el controlador **app\Http\Livewire\PaymentMethodList.php**:
+    ```php
+    public function defaultPaymentMethod($paymentMethodId){
+        auth()->user()->updateDefaultPaymentMethod($paymentMethodId);
+    }
+    ```
+3. Modificar el método **paymentMethodCreate** del controlador **app\Http\Livewire\PaymentMethodCreate.php**:
+    ```php
+    public function paymentMethodCreate($paymentMethod){
+        if (auth()->user()->hasPaymentMethod()) {
+            auth()->user()->addPaymentMethod($paymentMethod);
+        }else{
+            auth()->user()->updateDefaultPaymentMethod($paymentMethod);
+        }
+        
+        $this->emitTo('payment-method-list', 'render');
+    }
+    ```
+4. Commit Video 15:
+    + $ git add .
+    + $ git commit -m "Commit 15: Elegir método de pago predeterminado"
+    + $ git push -u origin main
+
+## Sección 4: Suscripciones
+
+### Video 16. Crear suscripciones en Stripe
+
+
+### Video 17. Incluir suscripciones en nuestra plataforma
+### Video 18. Iniciar suscripcion
+### Video 19. Cambiar de plan
+### Video 20. Cancelar y reanudar suscripción
+### Video 21. Solicitar método de pago
+### Video 22. Proteger rutas
 
 
 

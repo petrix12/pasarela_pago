@@ -9,18 +9,28 @@
         </div>
 
         <div class="card-body divide-y divide-gray-200">
-            @foreach ($paymentMethods as $paymentMethod)
+            @forelse ($paymentMethods as $paymentMethod)
                 <article class="text-sm text-gray-700 py-2 flex justify-between items-center">
                     <div>
-                        <h1><span class="font-bold">{{ $paymentMethod->billing_details->name }}</span> XXXX-{{ $paymentMethod->card->last4 }}</h1>
+                        <h1><span class="font-bold">{{$paymentMethod->billing_details->name}}</span> XXXX-{{$paymentMethod->card->last4}}
+                            @if ($paymentMethod->id == auth()->user()->defaultPaymentMethod()->id)
+                                (default)
+                            @endif
+                        </h1>
                         <p>Expira: {{ $paymentMethod->card->exp_month }}/{{ $paymentMethod->card->exp_year }}</p>
                     </div>
-                    <div>
-                        {{-- <i class="fas fa-star cursor-pointer p-3 hover:text-gray-700" wire:click="defaultPaymentMethod('{{$paymentMethod->id}}')"></i> --}}
-                        <i class="fas fa-trash cursor-pointer p-3 hover:text-gray-700" wire:click="deletePaymentMethod('{{$paymentMethod->id}}')"></i>                      
+                    <div class="grid grid-cols-2 border border-gray-200 rounded text-gray-500 divide-x divide-gray-200">                       
+                        @unless ($paymentMethod->id == auth()->user()->defaultPaymentMethod()->id)
+                            <i class="fas fa-star cursor-pointer p-3 hover:text-gray-700" wire:click="defaultPaymentMethod('{{$paymentMethod->id}}')"></i>
+                            <i class="fas fa-trash cursor-pointer p-3 hover:text-gray-700" wire:click="deletePaymentMethod('{{$paymentMethod->id}}')"></i>                      
+                        @endunless
                     </div>
                 </article>
-            @endforeach
+            @empty
+                <article class="p-2">
+                    <h1 class="text-sm text-gray-700">No cuenta con ningún método de pago</h1>
+                </article>
+            @endforelse
         </div>
     </section>
     {{-- <section class="card relative">
