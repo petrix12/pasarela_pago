@@ -48,7 +48,7 @@
         </script>
         <script>
             function stripe(){
-                const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
+                const stripe = Stripe(" {{ env('STRIPE_KEY') }} ");
                 const elements = stripe.elements();
                 const cardElement = elements.create('card');
                 cardElement.mount('#card-element');

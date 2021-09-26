@@ -844,7 +844,7 @@
 4. Crear la vista **resources\views\billing\index.blade.php**:
     ```php
     <x-app-layout>
-        <div class="pb-12">
+        <div class="py-12">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 @livewire('payment-method-create')
             </div>
@@ -988,7 +988,7 @@
         @slot('js')
             <script>
                 function stripe(){
-                    const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
+                    const stripe = Stripe(" {{ env('STRIPE_KEY') }} ");
                     const elements = stripe.elements();
                     const cardElement = elements.create('card');
                     cardElement.mount('#card-element');
@@ -1116,7 +1116,7 @@
             </script>
             <script>
                 function stripe(){
-                    const stripe = Stripe('pk_test_51JdZ9zCF1N694F8gYnEPuk3NgrO5nKTgxSG72HlNFZSP8JWqK3rsyVspMQ5yPRcUzAEOq5jwfS7L5ULwdXLm9Ydk00NVoNviwv');
+                    const stripe = Stripe(" {{ env('STRIPE_KEY') }} ");
                     const elements = stripe.elements();
                     const cardElement = elements.create('card');
                     cardElement.mount('#card-element');
@@ -1170,8 +1170,40 @@
     + $ git push -u origin main
 
 ### Video 13. Mostrar el listado de métodos de pago agregados
+1. Crear componente livewire **PaymentMethodList**:
+    + $ php artisan make:livewire PaymentMethodList
+2. Redefinir el método **render** del controlador **app\Http\Livewire\PaymentMethodList.php**:
+    ```php
+    public function render()
+    {
+        // Recupera la lista de los métodos de pagos
+        $paymentMethods =auth()->user()->paymentMethods();
 
-
+        return view('livewire.payment-method-list', compact('paymentMethods'));
+    }
+    ```
+3. Diseñar la vista **resources\views\livewire\payment-method-list.blade.php**:
+    ```php
+    <div>
+        <section class="card">
+            <div class="px-6 py-4 bg-gray-50">
+                <h1 class="text-gray-700 text-lg font-bold">Métodos de pago agregado</h1>
+            </div>
+            <div class="card-body divide-y divide-gray-200">
+                @foreach ($paymentMethods as $paymentMethod)
+                    <article class="text-sm text-gray-700 py-2 flex justify-between items-center">
+                        <h1><span class="font-bold">{{ $paymentMethod->billing_details->name }}</span> XXXX-{{ $paymentMethod->card->last4 }}</h1>
+                        <p>Expira: {{ $paymentMethod->card->exp_month }}/{{ $paymentMethod->card->exp_year }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </section>
+    </div>
+    ```
+4. Commit Video 13:
+    + $ git add .
+    + $ git commit -m "Commit 13: Mostrar el listado de métodos de pago agregados"
+    + $ git push -u origin main
 
 ### Video 14. Eliminar método de pago
 ### Video 15. Elegir método de pago predeterminado
