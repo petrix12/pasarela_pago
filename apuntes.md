@@ -1428,7 +1428,7 @@
                         <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
                     </ul>
                 </div>
-                <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" />
+                <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" />
             </div>
 
             {{-- Plan trimestral --}}
@@ -1444,7 +1444,7 @@
                         <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Elit repellat</li>
                     </ul>
                 </div>
-                <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" />
+                <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" />
             </div>
 
             {{-- Plan anual --}}
@@ -1473,10 +1473,62 @@
     + $ git push -u origin main
 
 ### Video 18. Iniciar suscripcion
+1. Modificar el componente **resources\views\components\button-subscription.blade.php**:
+    ```php
+    @props(['name', 'price'])
 
+    <div class="w-full">
+        @if (auth()->user()->subscribed($name))
+            @if (auth()->user()->subscribedToPrice($price, $name))
+                <button 
+                    class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                    Cancelar
+                </button>   
+            @else
+                <button 
+                    class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                    Cambiar de plan
+                </button>
+            @endif   
+        @else
+            <button wire:click="newSubscription('{{ $name }}', '{{ $price }}')"
+                wire:loading.remove
+                wire:target="newSubscription('{{ $name }}', '{{ $price }}')"
+                class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full flex items-center justify-center">
+                Subcribirse
+            </button>
 
+            <button wire:loading.flex
+                wire:target="newSubscription('{{ $name }}', '{{ $price }}')"
+                class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                <x-spinner size=6 class="mr-2" />
+                Subcribirse
+            </button>
+        @endif
+    </div>
+    ```
+2. Modificar el componente **resources\views\components\spinner.blade.php**:
+    ```php
+    @props(['size' => '64'])
+    <div {{ $attributes->merge([
+        "class" => "loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-$size w-$size"
+    ]) }}></div>
+    ```
+3. Crear el método **newSubscription** en el controlador **app\Http\Livewire\Subscriptions.php**:
+    ```php
+    public function newSubscription($name, $price){
+        auth()->user()->newSubscription($name, $price)->create();
+    }
+    ```
+4. Commit Video 18:
+    + $ git add .
+    + $ git commit -m "Commit 18: Iniciar suscripcion"
+    + $ git push -u origin main
 
 ### Video 19. Cambiar de plan
+
+
+
 ### Video 20. Cancelar y reanudar suscripción
 ### Video 21. Solicitar método de pago
 ### Video 22. Proteger rutas

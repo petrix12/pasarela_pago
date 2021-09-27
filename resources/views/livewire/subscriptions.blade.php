@@ -14,7 +14,7 @@
                     <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
                 </ul>
             </div>
-            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" />
+            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" />
         </div>
 
         {{-- Plan trimestral --}}
@@ -30,7 +30,7 @@
                     <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Elit repellat</li>
                 </ul>
             </div>
-            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" />
+            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" />
         </div>
 
         {{-- Plan anual --}}
