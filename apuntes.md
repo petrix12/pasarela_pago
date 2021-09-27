@@ -1667,8 +1667,101 @@
     + $ git push -u origin main
 
 ### Video 21. Solicitar método de pago
+1. Modificar vista **resources\views\components\button-subscription.blade.php**:
+    ```php
+    @props(['name', 'price'])
 
+    <div class="w-full">
+        @if (auth()->user()->hasDefaultPaymentMethod())
+            @if (auth()->user()->subscribed($name))
+                @if (auth()->user()->subscribedToPrice($price, $name))
+                    @if (auth()->user()->subscription($name)->onGracePeriod())
+                        <button wire:click="resuminSubscription('{{ $name }}')"
+                            wire:loading.remove
+                            wire:target="resuminSubscription('{{ $name }}')"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            Reanudar plan
+                        </button>
 
+                        <button wire:loading.flex
+                            wire:target="resuminSubscription('{{ $name }}')"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            <x-spinner size=6 class="mr-2" />
+                            Reanudar plan
+                        </button>               
+                    @else
+                        <button wire:click="cancellingSubscription('{{ $name }}')"
+                            wire:loading.remove
+                            wire:target="cancellingSubscription('{{ $name }}')"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            Cancelar
+                        </button>
+
+                        <button wire:loading.flex
+                            wire:target="cancellingSubscription('{{ $name }}')"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            <x-spinner size=6 class="mr-2" />
+                            Cancelar
+                        </button>
+                    @endif
+                @else
+                    <button wire:click="changingPlans('{{ $name }}', '{{ $price }}')"
+                        wire:loading.remove
+                        wire:target="changingPlans('{{ $name }}', '{{ $price }}')"
+                        class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                        Cambiar de plan
+                    </button>
+
+                    <button wire:loading.flex
+                        wire:target="changingPlans('{{ $name }}', '{{ $price }}')"
+                        class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                        <x-spinner size=6 class="mr-2" />
+                        Cambiar de plan
+                    </button>
+                @endif   
+            @else
+                <button wire:click="newSubscription('{{ $name }}', '{{ $price }}')"
+                    wire:loading.remove
+                    wire:target="newSubscription('{{ $name }}', '{{ $price }}')"
+                    class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full flex items-center justify-center">
+                    Subcribirse
+                </button>
+
+                <button wire:loading.flex
+                    wire:target="newSubscription('{{ $name }}', '{{ $price }}')"
+                    class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                    <x-spinner size=6 class="mr-2" />
+                    Subcribirse
+                </button>
+            @endif
+        @else
+            <button
+                class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                Agregar método de pago
+            </button>
+        @endif
+    </div>
+    ```
+2. Modificar el método **paymentMethodCreate** del controlador **app\Http\Livewire\PaymentMethodCreate.php**:
+    ```php
+    public function paymentMethodCreate($paymentMethod){
+        ≡
+        $this->emitTo('subscriptions', 'render');
+    }
+    ```
+3. Modificar el controlador **app\Http\Livewire\Subscriptions.php** para la escucha del método **render**:
+    ```php
+    ≡
+    class Subscriptions extends Component
+    {
+        protected $listeners = ['render'];
+        ≡
+    }
+    ```
+4. Commit Video 21:
+    + $ git add .
+    + $ git commit -m "Commit 21: Solicitar método de pago"
+    + $ git push -u origin main
 
 ### Video 22. Proteger rutas
 
