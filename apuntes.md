@@ -1764,6 +1764,68 @@
     + $ git push -u origin main
 
 ### Video 22. Proteger rutas
+1. Crear middleware **EnsureUserIsSubscribed**:
+    + $ php artisan make:middleware EnsureUserIsSubscribed
+2. Redifinir el método **handle** del middleware **app\Http\Middleware\EnsureUserIsSubscribed.php**:
+    ```php
+    public function handle(Request $request, Closure $next)
+    {       
+        if ($request->user() && ! $request->user()->subscribed('Servicios Sefar Universal')) {
+            // This user is not a paying customer...
+            return redirect('billing');
+        }
+
+        return $next($request);
+    }
+    ```
+    + **Nota**: código copiado de https://laravel.com/docs/8.x/billing
+3. Registrar el middleware en el kernel **app\Http\Kernel.php**:
+    ```php
+    ≡
+    class Kernel extends HttpKernel
+    {
+        ≡
+        protected $routeMiddleware = [
+            ≡
+            'subscription' => \App\Http\Middleware\EnsureUserIsSubscribed::class,
+        ];
+    }
+    ```
+4. Agregar middleware a la ruta **articles.show** en el archivo **routes\web.php**:
+    ```php
+    Route::get('articles/{article}', [ArticleController::class, 'show'])->middleware('subscription')->name('articles.show');
+    ```
+5. Commit Video 22:
+    + $ git add .
+    + $ git commit -m "Commit 22: Proteger rutas"
+    + $ git push -u origin main
+
+## Sección 5: Facturas
+
+### Video 23. Mostrar facturas
+
+
+
+### Video 24. Descargar facturas
+
+## Sección 6: Métodos de pagos únicos
+### Video 25. Vista de venta de productos
+### Video 26. Crear método de pago único
+
+## Sección 7: Manejo de pagos fallidos
+### Video 27. Manejo de pagos fallidos de cargos unicos
+### Video 28. Manejo de pagos fallidos suscripciones
+
+## Sección 8: Webhook y prueba de suscripciones
+### Video 29. Crear un punto de conexión
+### Video 30. Periodo de prueba
+
+## Sección 9: Cupones de descuento
+### Video 31. Reestructurar el codigo
+### Video 32. Aplicar descuento
+
+## Sección 10: Despedida del curso
+### Video 33. Despedida del curso
 
 
 
