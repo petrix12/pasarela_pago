@@ -18,4 +18,12 @@ class Subscriptions extends Component
     public function changingPlans($name, $price){
         auth()->user()->subscription($name)->swap($price);
     }
+
+    public function cancellingSubscription($name){
+        auth()->user()->subscription($name)->cancel();
+    }
+
+    public function resuminSubscription($name){
+        auth()->user()->subscription($name)->resume();
+    }
 }
