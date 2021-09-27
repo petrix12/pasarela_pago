@@ -8,7 +8,7 @@
                 @livewire('payment-method-list')
             </div>
 
-            {{-- @livewire('invoices') --}}
+            @livewire('invoices')
         </div>
     </div>
 </x-app-layout>

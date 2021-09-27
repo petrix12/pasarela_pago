@@ -1803,10 +1803,104 @@
 ## Sección 5: Facturas
 
 ### Video 23. Mostrar facturas
+1. Crear componente livewire **Invoices**:
+    + $ php artisan make:livewire Invoices
+2. Modificar la vista **resources\views\billing\index.blade.php** para agregar el componente **Invoices**:
+    ```php
+    <x-app-layout>
+        <div class="pb-12">
+            @livewire('subscriptions')
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                @livewire('payment-method-create')
 
+                <div class="my-8">
+                    @livewire('payment-method-list')
+                </div>
 
+                @livewire('invoices')
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+3. Diseñar la vista del nuevo componente **resources\views\livewire\invoices.blade.php**:
+    ```php
+    <div class="card relative">
+        <div wire:loading.flex class="absolute w-full h-full bg-gray-100 bg-opacity-25 z-30 items-center justify-center">
+            <x-spinner size="20" />
+        </div>
+
+        <div class="card-body">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left">
+                        <th class="w-1/2 px-4 py-2">Fecha</th>
+                        <th class="w-1/4 px-4 py-2">Dólares</th>
+                        <th class="w-1/4 px-4 py-2"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @forelse ($invoices as $invoice)
+                        <tr>
+                            <td class="px-4 py-3">{{ $invoice->date()->toFormattedDateString() }}</td>
+                            <td class="px-4 py-3">{{ $invoice->total() }}</td>
+                            <td class="px-4 py-3 text-right">
+                                <a class="btn btn-primary" href="/user/invoice/{{ $invoice->id }}">Download</a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="px-4 py-3 text-gray-700">
+                                No tiene facturas registradas
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>        
+        </div>
+    </div>
+    ```
+4. Redefinir el controlador del nuevo componente **app\Http\Livewire\Invoices.php**:
+    ```php
+    <?php
+
+    namespace App\Http\Livewire;
+
+    use Livewire\Component;
+
+    class Invoices extends Component
+    {
+        protected $listeners = ['render'];
+
+        public function render()
+        {
+            $invoices = auth()->user()->invoices();
+
+            return view('livewire.invoices', compact('invoices'));
+        }
+    }
+    ```
+5. Modificar el método **newSubscription** del controlador **app\Http\Livewire\Subscriptions.php**:
+    ```php
+    public function newSubscription($name, $price){
+        auth()->user()->newSubscription($name, $price)->create();
+        $this->emitTo('invoices', 'render');
+    }
+    ```
+6. Modificar el método **changingPlans** del controlador **app\Http\Livewire\Subscriptions.php**:
+    ```php
+    public function changingPlans($name, $price){
+        auth()->user()->subscription($name)->swap($price);
+        $this->emitTo('invoices', 'render');
+    }
+    ```
+7. Commit Video 23:
+    + $ git add .
+    + $ git commit -m "Commit 23: Mostrar facturas"
+    + $ git push -u origin main
 
 ### Video 24. Descargar facturas
+
+
 
 ## Sección 6: Métodos de pagos únicos
 ### Video 25. Vista de venta de productos
