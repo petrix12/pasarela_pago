@@ -18,7 +18,7 @@
                         <td class="px-4 py-3">{{ $invoice->date()->toFormattedDateString() }}</td>
                         <td class="px-4 py-3">{{ $invoice->total() }}</td>
                         <td class="px-4 py-3 text-right">
-                            <a class="btn btn-primary" href="/user/invoice/{{ $invoice->id }}">Download</a>
+                            <a class="btn btn-primary" href="/user/invoice/{{ $invoice->id }}">Descargar</a>
                         </td>
                     </tr>
                 @empty

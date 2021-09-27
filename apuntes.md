@@ -1844,7 +1844,7 @@
                             <td class="px-4 py-3">{{ $invoice->date()->toFormattedDateString() }}</td>
                             <td class="px-4 py-3">{{ $invoice->total() }}</td>
                             <td class="px-4 py-3 text-right">
-                                <a class="btn btn-primary" href="/user/invoice/{{ $invoice->id }}">Download</a>
+                                <a class="btn btn-primary" href="/user/invoice/{{ $invoice->id }}">Descargar</a>
                             </td>
                         </tr>
                     @empty
@@ -1899,11 +1899,30 @@
     + $ git push -u origin main
 
 ### Video 24. Descargar facturas
-
-
+1. Agregar ruta para descargar facturas en **routes\web.php**:
+    ```php
+    Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
+        return $request->user()->downloadInvoice($invoiceId, [
+            'vendor' => 'Sefar Universal',
+            'product' => 'Servicio de Nacionalidad',
+        ]);
+    });
+    ```
+    + Importar la definición de la clase **Request**:
+    ```php
+    use Illuminate\Http\Request;
+    ```
+2. Commit Video 23:
+    + $ git add .
+    + $ git commit -m "Commit 23: Mostrar facturas"
+    + $ git push -u origin main
 
 ## Sección 6: Métodos de pagos únicos
+
 ### Video 25. Vista de venta de productos
+
+
+
 ### Video 26. Crear método de pago único
 
 ## Sección 7: Manejo de pagos fallidos
