@@ -1793,7 +1793,7 @@
     ```
 4. Agregar middleware a la ruta **articles.show** en el archivo **routes\web.php**:
     ```php
-    Route::get('articles/{article}', [ArticleController::class, 'show'])->middleware('subscription')->name('articles.show');
+    Route::get('articles/{article}', [ArticleController::class, 'show'])->middleware('subscription', 'auth')->name('articles.show');
     ```
 5. Commit Video 22:
     + $ git add .
@@ -1920,8 +1920,67 @@
 ## Sección 6: Métodos de pagos únicos
 
 ### Video 25. Vista de venta de productos
+1. Crear ruta para comprar un producto en **routes\web.php**:
+    ```php
+    Route::get('products/{product}/pay', [ProductController::class, 'pay'])->name('products.pay');
+    ```  
+2. Crear el método **pay** en el controlador **app\Http\Controllers\ProductController.php**:
+    ```php
+    public function pay(Product $product){
+        return view('products.pay', compact('product'));
+    }
+    ```
+3. Modificar la vista **resources\views\welcome.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="container py-10">
+            <div class="grid grid-cols-3 gap-6">
+                @foreach ($products as $product)
+                    <div class="card">
+                        <div class="px-4 py-2 bg-gray-900 flex justify-between items-center">
+                            <p class="text-gray-200 font-bold text-xl">{{ $product->price }} USD</p>
+                            <a href="{{ route('products.pay', $product) }}" class="btn btn-secondary">Comprar</a>
+                        </div>
+                        ≡
+                    </div>
+                @endforeach
+                ≡
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+4. Crear vista **resources\views\products\pay.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="container py-12 grid grid-cols-12 gap-6">
+            <div class="col-span-7">
+                <article class="card">
+                    <div class="card-body">
+                        <div class="flex">
+                            <img class="w-48 h-28 object-cover" src="{{Storage::url($product->image)}}" alt="">
+                            <div class="ml-4 flex justify-between items-center self-start flex-1">
+                                <h1 class="text-gray-500 font-bold text-lg uppercase">{{$product->title}}</h1>
+                                <p class="font-bold text-gray-500">{{$product->price}} USD</p>
+                            </div>
+                        </div>
+                    
+                        <hr class="my-4">
 
+                        <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi incidunt doloribus vel omnis minus blanditiis accusamus? Sed, tempora, autem quam quisquam
+                        <a class="text-blue-500 font-bold" href="">Terminos y condiciones</a></p>
+                    </div>
+                </article>
+            </div>
 
+            <div class="col-span-5">
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+5. Commit Video 25:
+    + $ git add .
+    + $ git commit -m "Commit 25: Vista de venta de productos"
+    + $ git push -u origin main
 
 ### Video 26. Crear método de pago único
 
