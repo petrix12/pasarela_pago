@@ -2597,7 +2597,25 @@
 ## Sección 10: Despedida del curso
 
 ### Video 33. Despedida del curso
+1. Activar cuenta **Stripe** (Para Europa y México):
+    + Ir a la página de [Stripe](https://stripe.com/es-us) e iniciar sesión.
+    + Ir a **Productos**.
+    + Dar clic en **Activar cuenta**.
+    + Completar todo lo que se le solicite.
+2. Para los paises que no aparecen en la lista:
+    + Opción 1: Crear una empresa en EEUU y seleccionar como país EEUU.
+        + Para esto seguir el siguiente video de YouTube:
+            + **[Cómo Usar STRIPE en Latinoamérica (2021) - LEGALMENTE](https://www.youtube.com/watch?v=lKybWqos3VI)**.
+            + Esta opción tiene un costo.
+    + Opción 2: Este método puede ocasionar la cancelación de la cuenta de Stripe, por tal motivo se recomienda iniciar con esta opción y luego pasarse a la primera.
+        + Para realizar esta opción seguir el siguiente video de YouTube:
+            + **[Stripe GRATIS en Cualquier País (NUEVO MÉTODO) 2021](https://www.youtube.com/watch?v=YEgKDnnrHyY)**.
+3. Commit Video 33:
+    + $ git add .
+    + $ git commit -m "Commit 33: Despedida del curso"
+    + $ git push -u origin main
 
+## Personalización del proyecto:
 
 
 ***
@@ -2606,21 +2624,28 @@
     ***
     ```
 
+## Material de interés
 
-## Repositorios de interes:
+### Repositorios de interes:
 + https://github.com/coders-free/payment
++ https://github.com/petrix12/pasarela_pago.git
 
-## Para solventar problemas con tailwindcss:
+### Para solventar problemas con tailwindcss:
 + $ npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 + $ npm run dev
 
-## Para limpiar configuración y reestablecer el cache:
+### Para limpiar configuración y reestablecer el cache:
 + $ php artisan config:clear   
 + $ php artisan config:cache 
 
-## En caso de no permitir compilar algo:
+### En caso de no permitir compilar algo:
 + $ php artisan clear-compiled
 + $ composer dumpautoload
+
+### Para correr seeders en Heroku
++ $ heroku run bash
++ $ composer update
++ $ php artisan db:seed
 
 ## Deploy del proyecto en Heroku
 1. Crear en la raíz del proyecto el archivo **Procfile** (sin extensión) para elegir un servidor apache en Heroku y también indicarle la ubicación del archivo incial index.php:
@@ -2675,8 +2700,3 @@
     + $ heroku logout
 17. Desconectar con repositorio Heroku:
     + $ git remote rm heroku
-
-## Para correr seeders en Heroku
-+ $ heroku run bash
-+ $ composer update
-+ $ php artisan db:seed
