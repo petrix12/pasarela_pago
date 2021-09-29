@@ -2,6 +2,11 @@
     $nav_links = [
         [
             'name' => 'Principal',
+            'route' => route('dashboard'),
+            'active' => request()->routeIs('dashboard')
+        ],
+        [
+            'name' => 'Productos',
             'route' => route('home'),
             'active' => request()->routeIs('home')
         ],

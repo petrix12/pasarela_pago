@@ -4,8 +4,10 @@
 
         <div class="w-full mx-auto px-5 py-10 text-gray-600 mb-10">
             <div class="text-center max-w-xl mx-auto">
-                <h1 class="text-5xl md:text-6xl font-bold mb-5">Pricing</h1>
-                <h3 class="text-xl font-medium mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit repellat dignissimos laboriosam odit accusamus porro</h3>
+                <h1 class="text-5xl md:text-6xl font-bold mb-5">Precios</h1>
+                <h3 class="text-xl font-medium mb-10">
+                    Selecciona un plan y empieza a disfrutar de los servicios que ofrece Sefar Universal
+                </h3>
             </div>
             <div class="max-w-4xl mx-auto md:flex">
                 {{-- Plan mensual --}}

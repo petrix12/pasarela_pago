@@ -979,7 +979,7 @@
 
                 <div class="card-footer bg-gray-50 flex justify-end">
                     <button class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">
-                        Update Payment Method
+                        Agregar método de pago
                     </button>
                 </div>
             </form>
@@ -2606,7 +2606,7 @@
     + Opción 1: Crear una empresa en EEUU y seleccionar como país EEUU.
         + Para esto seguir el siguiente video de YouTube:
             + **[Cómo Usar STRIPE en Latinoamérica (2021) - LEGALMENTE](https://www.youtube.com/watch?v=lKybWqos3VI)**.
-            + Esta opción tiene un costo.
+            + Esta opción tiene un costo de $200 a $500.
     + Opción 2: Este método puede ocasionar la cancelación de la cuenta de Stripe, por tal motivo se recomienda iniciar con esta opción y luego pasarse a la primera.
         + Para realizar esta opción seguir el siguiente video de YouTube:
             + **[Stripe GRATIS en Cualquier País (NUEVO MÉTODO) 2021](https://www.youtube.com/watch?v=YEgKDnnrHyY)**.
@@ -2616,6 +2616,288 @@
     + $ git push -u origin main
 
 ## Personalización del proyecto:
+1. Modificar la vista **resources\views\navigation-menu.blade.php**:
+    ```php
+    @php
+        $nav_links = [
+            [
+                'name' => 'Principal',
+                'route' => route('dashboard'),
+                'active' => request()->routeIs('dashboard')
+            ],
+            [
+                'name' => 'Productos',
+                'route' => route('home'),
+                'active' => request()->routeIs('home')
+            ],
+            [
+                'name' => 'Artículos',
+                'route' => route('articles.index'),
+                'active' => request()->routeIs('articles.*')
+            ],
+        ];
+    @endphp
+    ≡
+    ```
+2. Modificar la vista **resources\views\vendor\jetstream\components\welcome.blade.php**:
+    ```php
+    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div>
+            <x-jet-application-logo class="block h-12 w-auto" />
+        </div>
+
+        <div class="mt-8 text-2xl">
+            Bienvenidos a la aplicación de productos de Sefar Universal!
+        </div>
+
+        <div class="mt-6 text-gray-500">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam quaerat nulla consequatur, 
+            ipsam voluptatem reiciendis et, sunt, impedit quod debitis perspiciatis consectetur excepturi 
+            velit iste doloribus. Sunt earum sapiente mollitia?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt voluptatem fugiat numquam, 
+            labore aliquam mollitia molestiae exercitationem animi, ipsum voluptate id magnam quidem 
+            ratione porro vero dolorum distinctio adipisci incidunt.
+        </div>
+    </div>
+
+    <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
+        <div class="p-6">
+            <div class="flex items-center">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="#">Documentación</a></div>
+            </div>
+
+            <div class="ml-12">
+                <div class="mt-2 text-sm text-gray-500">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis commodi officia asperiores 
+                    nihil et quo laborum eveniet atque mollitia! Nobis possimus distinctio enim fuga, 
+                    laboriosam sint maiores blanditiis expedita voluptates?
+                </div>
+
+                <a href="https://laravel.com/docs">
+                    <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
+                            <div>Explore la documentación</div>
+
+                            <div class="ml-1 text-indigo-500">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-200 md:border-t-0 md:border-l">
+            <div class="flex items-center">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="#">Términos y condiciones</a></div>
+            </div>
+
+            <div class="ml-12">
+                <div class="mt-2 text-sm text-gray-500">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias deserunt minima 
+                    dolore aperiam dolorem odit adipisci nam sequi, laborum consequatur ut reiciendis ab 
+                    vitae animi nisi! Cupiditate, a. Quasi, iure?
+                </div>
+
+                <a href="https://laracasts.com">
+                    <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
+                            <div>Revise los términos y condiciones</div>
+
+                            <div class="ml-1 text-indigo-500">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-200">
+            <div class="flex items-center">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="#">Garantías del servicio</a></div>
+            </div>
+
+            <div class="ml-12">
+                <div class="mt-2 text-sm text-gray-500">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui optio doloribus natus 
+                    porro velit culpa aut excepturi, laudantium animi dolores, et dolorem beatae dolore 
+                    nostrum dolor minima quaerat. Sequi, quia?
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-200 md:border-l">
+            <div class="flex items-center">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-400"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold">Autenticación</div>
+            </div>
+
+            <div class="ml-12">
+                <div class="mt-2 text-sm text-gray-500">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia aperiam animi repellendus 
+                    incidunt, ducimus ad quam placeat aspernatur eum repudiandae nisi esse maxime atque quibusdam, 
+                    explicabo assumenda officia, quo consectetur!
+                </div>
+            </div>
+        </div>
+    </div>
+    ```
+3. Modificar la vista **resources\views\welcome.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="container py-10">
+            <div class="grid grid-cols-3 gap-6">
+                @foreach ($products as $product)
+                    <div class="card">
+                        <div class="px-4 py-2 bg-gray-200 flex justify-between items-center">
+                            <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
+                            <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
+                        </div>
+                        <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="Imagen del producto">
+                        <div class="card-body">
+                            <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
+                            <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="mt-6">
+                    {{ $products->links() }}
+                </div>
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+4. Modificar el archivo de estilos **resources\css\buttons.css**:
+    ```css
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+    }
+
+    .btn-primary {
+        /* @apply bg-blue-500 text-white; */
+        background-color: rgb(121, 22, 15);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        /* @apply bg-blue-700; */   
+        background-color: rgb(70, 12, 8);
+        color: white;
+    }
+
+    .btn-danger {
+        @apply bg-red-500 text-white;
+    }
+
+    .btn-danger:hover {
+        @apply bg-red-700;
+    }
+
+    .btn-success {
+        @apply bg-green-500 text-white;
+    }
+
+    .btn-success:hover {
+        @apply bg-green-700;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-500 text-white;
+    }
+
+    .btn-secondary:hover {
+        @apply bg-gray-700;
+    }
+    ```
+5. Modificar vista **resources\views\billing\index.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="pb-12">
+            {{-- @livewire('subscriptions') --}}
+
+            <div class="w-full mx-auto px-5 py-10 text-gray-600 mb-10">
+                <div class="text-center max-w-xl mx-auto">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-5">Precios</h1>
+                    <h3 class="text-xl font-medium mb-10">
+                        Selecciona un plan y empieza a disfrutar de los servicios que ofrece Sefar Universal
+                    </h3>
+                </div>
+                <div class="max-w-4xl mx-auto md:flex">
+                    {{-- Plan mensual --}}
+                    <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:my-6 rounded-md shadow-lg shadow-gray-600 md:flex md:flex-col">
+                        <div class="w-full flex-grow">
+                            <h2 class="text-center font-bold uppercase mb-4">PLAN MENSUAL</h2>
+                            <h3 class="text-center font-bold text-4xl mb-5">$9.99</h3>
+                            <ul class="text-sm px-5 mb-8">
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
+                            </ul>
+                        </div>
+                        @livewire('subscriptions', ['price' => 'price_1Je6v9CF1N694F8geZ0KffEI'], key('price_1Je6v9CF1N694F8geZ0KffEI'))
+                        {{-- <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" /> --}}
+                    </div>
+            
+                    {{-- Plan trimestral --}}
+                    <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:z-50 md:flex md:flex-col">
+                        <div class="w-full flex-grow">
+                            <h2 class="text-center font-bold uppercase mb-4">PLAN TRIMESTRAL</h2>
+                            <h3 class="text-center font-bold text-4xl md:text-5xl mb-5">$19.99</h3>
+                            <ul class="text-sm px-5 mb-8">
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Consectetur</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Adipisicing</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Elit repellat</li>
+                            </ul>
+                        </div>
+                        @livewire('subscriptions', ['price' => 'price_1Je6v9CF1N694F8gA4SNnBw6'], key('price_1Je6v9CF1N694F8gA4SNnBw6'))
+                        {{-- <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" /> --}}
+                    </div>
+            
+                    {{-- Plan anual --}}
+                    <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:my-6 rounded-md shadow-lg shadow-gray-600 md:flex md:flex-col">
+                        <div class="w-full flex-grow">
+                            <h2 class="text-center font-bold uppercase mb-4">PLAN ANUAL</h2>
+                            <h3 class="text-center font-bold text-4xl mb-5">$89.99</h3>
+                            <ul class="text-sm px-5 mb-8">
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Consectetur</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Adipisicing</li>
+                                <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Much more...</li>
+                            </ul>
+                        </div>
+                        @livewire('subscriptions', ['price' => 'price_1Je6v9CF1N694F8gyvdJbORd'], key('price_1Je6v9CF1N694F8gyvdJbORd'))
+                        {{-- <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gyvdJbORd" /> --}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                @livewire('payment-method-create')
+
+                <div class="my-8">
+                    @livewire('payment-method-list')
+                </div>
+
+                @livewire('invoices')
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+6. Modificar el seeder **database\seeders\DatabaseSeeder.php**:
+    ```php
+    ***
+    ```
+7. Ejecutar:
+    + $ npm run dev
+8. Commit:
+    + $ git add .
+    + $ git commit -m "Personalización del proyecto"
+    + $ git push -u origin main
+
+
+
 
 
 ***
@@ -2625,6 +2907,12 @@
     ```
 
 ## Material de interés
+
+## Colores Sefar:
++ Rojo: R:121 G:22 B:15
++ Verde: R:22 G:43 B:27
++ Amarillo: R:247 G:176 B:52
++ Gris: R:63 G:61 B:61
 
 ### Repositorios de interes:
 + https://github.com/coders-free/payment

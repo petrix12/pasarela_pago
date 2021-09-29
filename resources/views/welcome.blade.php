@@ -3,9 +3,9 @@
         <div class="grid grid-cols-3 gap-6">
             @foreach ($products as $product)
                 <div class="card">
-                    <div class="px-4 py-2 bg-gray-900 flex justify-between items-center">
-                        <p class="text-gray-200 font-bold text-xl">{{ $product->price }} USD</p>
-                        <a href="{{ route('products.pay', $product) }}" class="btn btn-secondary">Comprar</a>
+                    <div class="px-4 py-2 bg-gray-200 flex justify-between items-center">
+                        <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
+                        <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
                     </div>
                     <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="Imagen del producto">
                     <div class="card-body">
