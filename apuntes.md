@@ -2351,8 +2351,26 @@
     + $ git push -u origin main
 
 ### Video 30. Periodo de prueba
-
-
+1. Modificar el método **newSubscription** del controlador **app\Http\Livewire\Subscriptions.php** para permitir días de prueba a nuestro subscriptores:
+    ```php
+    public function newSubscription($name, $price){
+        try {
+            auth()->user()->newSubscription($name, $price)
+                ->trialDays(7)
+                ->create();
+            $this->emitTo('invoices', 'render');
+        } catch (IncompletePayment $exception) {
+            return redirect()->route(
+                'cashier.payment',
+                [$exception->payment->id, 'redirect' => route('billing.index')]
+            );
+        }
+    }
+    ```
+2. Commit Video 30:
+    + $ git add .
+    + $ git commit -m "Commit 30: Periodo de prueba"
+    + $ git push -u origin main
 
 ## Sección 9: Cupones de descuento
 ### Video 31. Reestructurar el codigo
