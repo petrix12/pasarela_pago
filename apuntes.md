@@ -2901,7 +2901,7 @@
     + $ heroku git:remote -a paymet
     + $ heroku run bash
     + $ composer update
-    + $ php artisan migrate:fresh
+    + $ php artisan migrate:fresh --seed
 + $ php artisan db:seed
 
 
