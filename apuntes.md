@@ -2154,6 +2154,7 @@
                 $this->emit('errorPayment');
             }
         }
+    }
     ```
 2. Modificar la vista **resources\views\livewire\product-pay.blade.php**:
     ```php
@@ -2251,11 +2252,39 @@
     + $ git push -u origin main
 
 ### Video 28. Manejo de pagos fallidos suscripciones
+1. Redefinir el controlador **app\Http\Livewire\Subscriptions.php**:
+    ```php
+    ≡
+    use Laravel\Cashier\Exceptions\IncompletePayment;
 
-
+    class Subscriptions extends Component
+    {
+        ≡
+        public function newSubscription($name, $price){
+            try {
+                auth()->user()->newSubscription($name, $price)->create();
+                $this->emitTo('invoices', 'render');
+            } catch (IncompletePayment $exception) {
+                return redirect()->route(
+                    'cashier.payment',
+                    [$exception->payment->id, 'redirect' => route('billing.index')]
+                );
+            }
+        }
+        ≡
+    }
+    ```
+2. Commit Video 28:
+    + $ git add .
+    + $ git commit -m "Commit 28: Manejo de pagos fallidos suscripciones"
+    + $ git push -u origin main
 
 ## Sección 8: Webhook y prueba de suscripciones
+
 ### Video 29. Crear un punto de conexión
+
+
+
 ### Video 30. Periodo de prueba
 
 ## Sección 9: Cupones de descuento
