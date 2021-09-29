@@ -2565,10 +2565,36 @@
     + $ git push -u origin main
 
 ### Video 32. Aplicar descuento
+1. Ir a la página de [Stripe](https://stripe.com/es-us) e iniciar sesión.
+2. Ir al panel de control (**Dashboard**).
+3. Ir a **Productos**.
+4. Ir a **Cupones**.
+5. Dar clic en **Crear un cupón de prueba**.
+    + Nombre: 50% de descuento
+    + ID: SEFAR
+    + Porcentaje de descuento: 50 %
+    + Duración: Varios meses
+    + Cantidad de meses: 3
+6. Dar clic en **Crear cupón**.
+7. Regresar a la aplicación en desarrollo.
+8. Modificar el método **newSubscription** del controlador **app\Http\Livewire\Subscriptions.php**:
+    ```php
+    ***
+    ```
+9. Modificar la vista **resources\views\livewire\subscriptions.blade.php**:
+    ```php
+    ***
+    ```
+    + Definir la propiedad **coupon** en la clase **Subscriptions**:
+    ```php
+    public $coupon;
+    ```
+10. Commit Video 32:
+    + $ git add .
+    + $ git commit -m "Commit 32: Aplicar descuento"
+    + $ git push -u origin main
 
 ## Sección 10: Despedida del curso
-
-
 
 ### Video 33. Despedida del curso
 
@@ -2579,7 +2605,6 @@
     ```php
     ***
     ```
-
 
 
 ## Repositorios de interes:

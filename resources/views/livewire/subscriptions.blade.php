@@ -33,6 +33,7 @@
                 </button>
             @endif   
         @else
+            <input wire:model="coupon" type="text" class="form-control mb-3" placeholder="Ingrese un cupón...">
             <a wire:click="newSubscription"
                 wire:loading.attr="disabled"
                 wire:target="newSubscription"

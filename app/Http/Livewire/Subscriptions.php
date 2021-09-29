@@ -8,8 +8,8 @@ use Laravel\Cashier\Exceptions\IncompletePayment;
 class Subscriptions extends Component
 {
     public $price;
-
     public $name = 'Servicios Sefar Universal';
+    public $coupon;
 
     protected $listeners = ['render'];
 
@@ -24,9 +24,16 @@ class Subscriptions extends Component
 
     public function newSubscription(){
         try {
-            auth()->user()->newSubscription($this->name, $this->price)
-                ->trialDays(7)
-                ->create();
+            if ($this->coupon) {
+                auth()->user()->newSubscription($this->name, $this->price)
+                    ->withCoupon($this->coupon)
+                    /* ->trialDays(7) */
+                    ->create();
+            }else{
+                auth()->user()->newSubscription($this->name, $this->price)
+                    /* ->trialDays(7) */
+                    ->create();              
+            }
             $this->emitTo('invoices', 'render');
             $this->emitTo('subscriptions', 'render');
         } catch (IncompletePayment $exception) {
