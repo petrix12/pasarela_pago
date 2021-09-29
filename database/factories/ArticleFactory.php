@@ -23,7 +23,8 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'image' => 'articles/' . $this->faker->image('public/storage/articles', 640, 480, null, false),
+            /* 'image' => 'articles/' . $this->faker->image('public/storage/articles', 640, 480, null, false), */
+            'image' => asset('assets/articles/') . $this->faker->image('public/storage/articles', 640, 480, null, false),
             'extract' => $this->faker->text(),
             'body' => $this->faker->text(2000)
         ];
