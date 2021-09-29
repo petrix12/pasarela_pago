@@ -2278,7 +2278,7 @@
     + $ git add .
     + $ git commit -m "Commit 28: Manejo de pagos fallidos suscripciones"
     + $ git push -u origin main
-
+dd
 ## Sección 8: Webhook y prueba de suscripciones
 
 ### Video 29. Crear un punto de conexión
