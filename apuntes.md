@@ -2889,13 +2889,20 @@
     ```php
     ***
     ```
-7. Ejecutar:
+7. Subir las imagenes de productos y artículos de manera manual a Heroku.
+8. Ejecutar:
     + $ npm run dev
-8. Commit:
+9. Commit:
     + $ git add .
     + $ git commit -m "Personalización del proyecto"
     + $ git push -u origin main
-
+10. Actualizar base de datos en Heroku:
+    + $ heroku login
+    + $ heroku git:remote -a paymet
+    + $ heroku run bash
+    + $ composer update
+    + $ php artisan migrate:fresh
++ $ php artisan db:seed
 
 
 
