@@ -2372,6 +2372,3 @@
     + $ heroku logout
 17. Desconectar con repositorio Heroku:
     + $ git remote rm heroku
-
-
-ccc

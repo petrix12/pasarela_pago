@@ -24,7 +24,7 @@ class ProductFactory extends Factory
         return [
             'title' => $this->faker->word(),
             /* 'image' => 'products/' . $this->faker->image('public/storage/products', 640, 480, null, false), */
-            'image' => asset('assets/products/') . $this->faker->image(asset('assets/products/'), 640, 480, null, false),
+            'image' => 'products/' . $this->faker->unique()->word(),
             'description' => $this->faker->text(),
             'price' => $this->faker->randomElement([19, 49, 99])
         ];
