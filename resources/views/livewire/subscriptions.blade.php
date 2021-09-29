@@ -1,52 +1,50 @@
-<div class="w-full mx-auto px-5 py-10 text-gray-600 mb-10">
-    <div class="text-center max-w-xl mx-auto">
-        <h1 class="text-5xl md:text-6xl font-bold mb-5">Pricing</h1>
-        <h3 class="text-xl font-medium mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit repellat dignissimos laboriosam odit accusamus porro</h3>
-    </div>
-    <div class="max-w-4xl mx-auto md:flex">
-        {{-- Plan mensual --}}
-        <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:my-6 rounded-md shadow-lg shadow-gray-600 md:flex md:flex-col">
-            <div class="w-full flex-grow">
-                <h2 class="text-center font-bold uppercase mb-4">PLAN MENSUAL</h2>
-                <h3 class="text-center font-bold text-4xl mb-5">$9.99</h3>
-                <ul class="text-sm px-5 mb-8">
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
-                </ul>
-            </div>
-            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8geZ0KffEI" />
-        </div>
-
-        {{-- Plan trimestral --}}
-        <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:z-50 md:flex md:flex-col">
-            <div class="w-full flex-grow">
-                <h2 class="text-center font-bold uppercase mb-4">PLAN TRIMESTRAL</h2>
-                <h3 class="text-center font-bold text-4xl md:text-5xl mb-5">$19.99</h3>
-                <ul class="text-sm px-5 mb-8">
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Consectetur</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Adipisicing</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Elit repellat</li>
-                </ul>
-            </div>
-            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gA4SNnBw6" />
-        </div>
-
-        {{-- Plan anual --}}
-        <div class="w-full md:w-1/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:my-6 rounded-md shadow-lg shadow-gray-600 md:flex md:flex-col">
-            <div class="w-full flex-grow">
-                <h2 class="text-center font-bold uppercase mb-4">PLAN ANUAL</h2>
-                <h3 class="text-center font-bold text-4xl mb-5">$89.99</h3>
-                <ul class="text-sm px-5 mb-8">
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Lorem ipsum</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Dolor sit amet</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Consectetur</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Adipisicing</li>
-                    <li class="leading-tight"><i class="mdi mdi-check-bold text-lg"></i> Much more...</li>
-                </ul>
-            </div>
-            <x-button-subscription name="Servicios Sefar Universal" price="price_1Je6v9CF1N694F8gyvdJbORd" />
-        </div>
-    </div>
+<div class="w-full">
+    @if (auth()->user()->hasDefaultPaymentMethod())
+        @if (auth()->user()->subscribed($name))
+            @if (auth()->user()->subscribedToPrice($price, $name))
+                @if (auth()->user()->subscription($name)->onGracePeriod())
+                    <div>
+                        <button wire:click="resuminSubscription"
+                            wire:loading.attr="disabled"
+                            wire:target="resuminSubscription"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            <x-spinner wire:loading wire:target="resuminSubscription" size=6 class="mr-2" />
+                            Reanudar plan
+                        </button>
+                    </div>          
+                @else
+                    <article>
+                        <button wire:click="cancellingSubscription"
+                            wire:loading.attr="disabled"
+                            wire:target="cancellingSubscription"
+                            class="font-bold bg-red-600 hover:bg-red-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                            <x-spinner wire:loading wire:target="cancellingSubscription" size=6 class="mr-2" />
+                            Cancelar
+                        </button>
+                    </article>
+                @endif
+            @else
+                <button wire:click="changingPlans"
+                    wire:loading.attr="disabled"
+                    wire:target="changingPlans"
+                    class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+                    <x-spinner wire:loading wire:target="changingPlans" size=6 class="mr-2" />
+                    Cambiar de plan
+                </button>
+            @endif   
+        @else
+            <a wire:click="newSubscription"
+                wire:loading.attr="disabled"
+                wire:target="newSubscription"
+                class="cursor-pointer font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full flex items-center justify-center">
+                <x-spinner wire:loading wire:target="newSubscription" size=6 class="mr-2" />
+                Subcribirse
+            </a>
+        @endif
+    @else
+        <button
+            class="font-bold bg-gray-600 hover:bg-gray-700 text-white rounded-md px-10 py-2 transition-colors w-full items-center justify-center">
+            Agregar método de pago
+        </button>
+    @endif
 </div>
