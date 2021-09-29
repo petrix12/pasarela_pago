@@ -2282,10 +2282,77 @@
 ## Sección 8: Webhook y prueba de suscripciones
 
 ### Video 29. Crear un punto de conexión
+1. Ir a la página de [Stripe](https://stripe.com/es-us) e iniciar sesión.
+2. Ir al panel de control (**Dashboard**).
+3. Ir a **Desarrolladores**.
+4. Ir a **Webhooks**.
+5. Dar clic en **Añadir un punto de conexión**.
+    + URL del punto de conexión: https://paymet.herokuapp.com/stripe/webhook
+    + Descripción: Comunicación entre Stripe y la aplicación nuestra.
+    + Evento a escuchar: customer.subscription.created
+    + **Nota**: Este tipo de conexión no se puede hacer con la aplicación de prueba en local.
+6. Dar clic en **Añadir punto de conexión**.
+7. Volver a nuestra aplicación en desarrollo.
+8. Quitar protección **CSRF** en el middleware **app\Http\Middleware\VerifyCsrfToken.php**:
+    ```php
+    <?php
 
+    namespace App\Http\Middleware;
 
+    use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+    class VerifyCsrfToken extends Middleware
+    {
+        /**
+        * The URIs that should be excluded from CSRF verification.
+        *
+        * @var array
+        */
+        protected $except = [
+            'stripe/*',
+        ];
+    }
+    ```
+9. Crear controlador **WeebhookController**:
+    + $ php artisan make:controller WeebhookController
+10. Programar el controlador **app\Http\Controllers\WeebhookController.php**:
+    ```php
+    <?php
+
+    namespace App\Http\Controllers;
+
+    use Laravel\Cashier\Http\Controllers\WebhookController as CashierController;
+
+    class WebhookController extends CashierController
+    {
+        /**
+        * Handle invoice payment succeeded.
+        *
+        * @param  array  $payload
+        * @return \Symfony\Component\HttpFoundation\Response
+        */
+        public function customerSubscriptionCreated($payload)
+        {
+            // Enviar correo eléctronico
+        }
+    }
+    ```
+11. Agregar ruta en el archivo de rutas **routes\web.php**:
+    ```php
+    Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
+    ```
+    + Importar la definición del controlador **WebhookController**:
+    ```php
+    use App\Http\Controllers\WebhookController;
+    ```
+12. Commit Video 29:
+    + $ git add .
+    + $ git commit -m "Commit 29: Crear un punto de conexión"
+    + $ git push -u origin main
 
 ### Video 30. Periodo de prueba
+
+
 
 ## Sección 9: Cupones de descuento
 ### Video 31. Reestructurar el codigo
@@ -2372,3 +2439,8 @@
     + $ heroku logout
 17. Desconectar con repositorio Heroku:
     + $ git remote rm heroku
+
+## Para correr seeders en Heroku
++ $ heroku run bash
++ $ composer update
++ $ php artisan db:seed

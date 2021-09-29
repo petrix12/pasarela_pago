@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        /* Storage::deleteDirectory('products');
+        Storage::deleteDirectory('products');
         Storage::deleteDirectory('articles');
 
         Storage::makeDirectory('products');
-        Storage::makeDirectory('articles'); */
+        Storage::makeDirectory('articles');
 
         Product::factory(10)->create();
         Article::factory(10)->create();
