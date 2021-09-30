@@ -2753,7 +2753,7 @@
                             <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
                             <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
                         </div>
-                        <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="Imagen del producto">
+                        <img class="h-56 w-full object-cover" src="{{Asset($product->image)}}" alt="{{ Asset($product->image) }}">
                         <div class="card-body">
                             <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
                             <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>
@@ -2767,7 +2767,79 @@
         </div>
     </x-app-layout>
     ```
-4. Modificar el archivo de estilos **resources\css\buttons.css**:
+4. Modificar vists **resources\views\products\pay.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="container py-12 grid grid-cols-12 gap-6">
+            <div class="col-span-7">
+                <article class="card">
+                    <div class="card-body">
+                        <div class="flex">
+                            <img class="w-48 h-28 object-cover" src="{{Asset($product->image)}}" alt="{{Asset($product->image)}}">
+                            <div class="ml-4 flex justify-between items-center self-start flex-1">
+                                <h1 class="text-gray-500 font-bold text-lg uppercase">{{$product->title}}</h1>
+                                <p class="font-bold text-gray-500">{{$product->price}} USD</p>
+                            </div>
+                        </div>
+                    
+                        <hr class="my-4">
+
+                        <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi incidunt doloribus vel omnis minus blanditiis accusamus? Sed, tempora, autem quam quisquam  <a class="text-blue-500 font-bold" href="">Terminos y condiciones</a></p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-span-5">
+                @livewire('product-pay', ['product' => $product])
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+5. Modificar vista **resources\views\articles\index.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12">
+            @foreach ($articles as $article)
+                <article class="card mb-6">
+
+                    <img class="h-72 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
+
+                    <div class="card-body">
+                        <h1 class="font-bold text-xl mb-2">
+                            <a href="{{route('articles.show', $article)}}">{{$article->title}}</a>
+                        </h1>
+
+                        <div class="text-gray-700">
+                            {{$article->extract}}
+                        </div>
+                    </div>
+                </article>
+            @endforeach
+            {{$articles->links()}}
+        </div>
+    </x-app-layout>
+    ```
+6. Modificar vista **resources\views\articles\show.blade.php**:
+    ```php
+    <x-app-layout>
+        <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12">
+            <h1 class="text-4xl font-bold text-gray-600">{{$article->title}}</h1>
+
+            <div class="text-lg text-gray-500 mb-2">
+                {{$article->extract}}
+            </div>
+
+            <figure>
+                <img class="h-80 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
+            </figure>
+
+            <div class="text-gray-500 mt-4">
+                {{$article->body}}
+            </div>
+        </div>
+    </x-app-layout>
+    ```
+7. Modificar el archivo de estilos **resources\css\buttons.css**:
     ```css
     .btn {
         @apply font-bold py-2 px-4 rounded;
@@ -2809,7 +2881,7 @@
         @apply bg-gray-700;
     }
     ```
-5. Modificar vista **resources\views\billing\index.blade.php**:
+8. Modificar vista **resources\views\billing\index.blade.php**:
     ```php
     <x-app-layout>
         <div class="pb-12">
@@ -2885,18 +2957,18 @@
         </div>
     </x-app-layout>
     ```
-6. Modificar el seeder **database\seeders\DatabaseSeeder.php**:
+10. Modificar el seeder **database\seeders\DatabaseSeeder.php**:
     ```php
     ***
     ```
-7. Subir las imagenes de productos y artículos de manera manual a Heroku.
-8. Ejecutar:
+11. Subir las imagenes de productos y artículos de manera manual a Heroku.
+12. Ejecutar:
     + $ npm run dev
-9. Commit:
+13. Commit:
     + $ git add .
     + $ git commit -m "Personalización del proyecto"
     + $ git push -u origin main
-10. Actualizar base de datos en Heroku:
+14. Actualizar base de datos en Heroku:
     + $ heroku login
     + $ heroku git:remote -a paymet
     + $ heroku config:add FILESYSTEM_DRIVER=local

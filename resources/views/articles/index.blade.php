@@ -3,7 +3,7 @@
         @foreach ($articles as $article)
             <article class="card mb-6">
 
-                <img class="h-72 w-full object-cover object-center" src="{{Storage::url($article->image)}}" alt="Imagen del artículo">
+                <img class="h-72 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
 
                 <div class="card-body">
                     <h1 class="font-bold text-xl mb-2">

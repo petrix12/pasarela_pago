@@ -4,7 +4,7 @@
             <article class="card">
                 <div class="card-body">
                     <div class="flex">
-                        <img class="w-48 h-28 object-cover" src="{{Storage::url($product->image)}}" alt="">
+                        <img class="w-48 h-28 object-cover" src="{{Asset($product->image)}}" alt="{{Asset($product->image)}}">
                         <div class="ml-4 flex justify-between items-center self-start flex-1">
                             <h1 class="text-gray-500 font-bold text-lg uppercase">{{$product->title}}</h1>
                             <p class="font-bold text-gray-500">{{$product->price}} USD</p>

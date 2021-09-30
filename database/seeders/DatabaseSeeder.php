@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'Subsanación de Expediente',
             'image' => 'products/producto10.png',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            'price' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+            'price' => 79
         ]);
 
         // Artículos: 
