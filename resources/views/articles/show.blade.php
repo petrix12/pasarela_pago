@@ -7,7 +7,7 @@
         </div>
 
         <figure>
-            <img class="h-80 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
+            <img class="h-80 w-full object-cover object-center" src="{{ asset($article->image) }}" alt="{{ asset($article->image) }}">
         </figure>
 
         <div class="text-gray-500 mt-4">

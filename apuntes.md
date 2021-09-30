@@ -2753,7 +2753,7 @@
                             <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
                             <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
                         </div>
-                        <img class="h-56 w-full object-cover" src="{{Asset($product->image)}}" alt="{{ Asset($product->image) }}">
+                        <img class="h-56 w-full object-cover" src="{{ asset($product->image) }}" alt="{{ asset($product->image) }}">
                         <div class="card-body">
                             <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
                             <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>
@@ -2775,7 +2775,7 @@
                 <article class="card">
                     <div class="card-body">
                         <div class="flex">
-                            <img class="w-48 h-28 object-cover" src="{{Asset($product->image)}}" alt="{{Asset($product->image)}}">
+                            <img class="w-48 h-28 object-cover" src="{{ asset($product->image) }}" alt="{{ asset($product->image) }}">
                             <div class="ml-4 flex justify-between items-center self-start flex-1">
                                 <h1 class="text-gray-500 font-bold text-lg uppercase">{{$product->title}}</h1>
                                 <p class="font-bold text-gray-500">{{$product->price}} USD</p>
@@ -2802,7 +2802,7 @@
             @foreach ($articles as $article)
                 <article class="card mb-6">
 
-                    <img class="h-72 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
+                    <img class="h-72 w-full object-cover object-center" src="{{ asset($article->image) }}" alt="{{ asset($article->image) }}">
 
                     <div class="card-body">
                         <h1 class="font-bold text-xl mb-2">
@@ -2830,7 +2830,7 @@
             </div>
 
             <figure>
-                <img class="h-80 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
+                <img class="h-80 w-full object-cover object-center" src="{{ asset($article->image) }}" alt="{{ asset($article->image) }}">
             </figure>
 
             <div class="text-gray-500 mt-4">
@@ -2975,7 +2975,7 @@
     + $ heroku run bash
     + $ composer update
     + $ php artisan migrate:fresh --seed
-+ $ php artisan db:seed
+    + $ php artisan db:seed
 
 
 
@@ -3014,6 +3014,10 @@
 + $ heroku run bash
 + $ composer update
 + $ php artisan db:seed
+
+### Revertir el último commit:
++ $ git revert HEAD
++ $ git push -u origin main
 
 ## Deploy del proyecto en Heroku
 1. Crear en la raíz del proyecto el archivo **Procfile** (sin extensión) para elegir un servidor apache en Heroku y también indicarle la ubicación del archivo incial index.php:
