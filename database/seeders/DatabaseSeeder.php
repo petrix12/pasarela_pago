@@ -17,16 +17,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Storage::deleteDirectory('products');
+        /* Storage::deleteDirectory('products');
         Storage::deleteDirectory('articles');
 
         Storage::makeDirectory('products');
         Storage::makeDirectory('articles');
 
         Product::factory(10)->create();
+        Article::factory(10)->create(); */
 
         // Productos: 
-        /* Product::create([
+        Product::create([
             'title' => 'Análisis por semana',
             'image' => 'products/producto01.png',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta officiis explicabo quisquam recusandae tenetur voluptatibus architecto earum fugiat deserunt error dolor corporis, esse placeat vitae dolore. Aut, fuga officiis.',
@@ -93,10 +94,79 @@ class DatabaseSeeder extends Seeder
             'title' => 'Subsanación de Expediente',
             'image' => 'products/producto10.png',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            'price' => 19
-        ]); */
+            'price' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
 
         // Artículos: 
-        Article::factory(10)->create();
+        Article::create([
+            'title' => 'Análisis por semana',
+            'image' => 'products/producto01.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta officiis explicabo quisquam recusandae tenetur voluptatibus architecto earum fugiat deserunt error dolor corporis, esse placeat vitae dolore. Aut, fuga officiis.',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+        
+        Article::create([
+            'title' => 'Carta de Naturaleza',
+            'image' => 'products/producto02.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ipsum laboriosam repellat, corrupti architecto eveniet quisquam placeat mollitia magnam hic adipisci eligendi assumenda accusamus cupiditate tempora ipsam culpa asperiores provident.',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Fase de Genealogía',
+            'image' => 'products/producto03.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo minima ipsum enim consequuntur aliquid atque tenetur officia, illo sequi assumenda nihil, doloremque quam, ut tempora! Adipisci recusandae quidem iste repudiandae!',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Memorándum Administrativo',
+            'image' => 'products/producto04.png',
+            'extract' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nobis beatae dicta sit quisquam ipsum ea alias totam quod dolorum earum eius minus distinctio, sequi debitis esse iste. Doloribus, vel!',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Nacionalidad Italiana',
+            'image' => 'products/producto05.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde tenetur, laborum facilis nisi iure ipsam inventore error minus sed vel praesentium, ad sint id. Reprehenderit voluptates repellat iste facilis nobis?',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Nacionalidad Portuguesa',
+            'image' => 'products/producto06.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus soluta voluptatum est. Ut provident, nihil velit nulla, alias ex modi illum veritatis similique, dolorum tempore expedita quidem iste excepturi corrupti.',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Recurso de Alzada',
+            'image' => 'products/producto07.png',
+            'extract' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. A repudiandae, ea ipsam expedita minus fugiat omnis voluptates, vitae cupiditate voluptatibus quis eius itaque unde pariatur. Reprehenderit atque facere vero sed?',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Resolución Expresa',
+            'image' => 'products/producto08.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quae impedit nesciunt veniam, aliquid dolorem ad sed id illo? Vitae voluptatibus, recusandae molestiae ex rerum nulla esse eos eveniet dolores?',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Servicio de Residencias',
+            'image' => 'products/producto09.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio at exercitationem blanditiis odit quam hic eaque aut facere rerum eius. Facere ex nemo modi. Animi corrupti molestias cupiditate in doloremque.',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+
+        Article::create([
+            'title' => 'Subsanación de Expediente',
+            'image' => 'products/producto10.png',
+            'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
+        ]);
+        
     }
 }

@@ -7,7 +7,7 @@
                         <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
                         <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
                     </div>
-                    <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="Imagen del producto">
+                    <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="{{ Storage::url($product->image) }}">
                     <div class="card-body">
                         <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
                         <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>

@@ -2899,6 +2899,7 @@
 10. Actualizar base de datos en Heroku:
     + $ heroku login
     + $ heroku git:remote -a paymet
+    + $ heroku config:add FILESYSTEM_DRIVER=local
     + $ heroku run bash
     + $ composer update
     + $ php artisan migrate:fresh --seed
