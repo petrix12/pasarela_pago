@@ -17,16 +17,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        /* Storage::deleteDirectory('products');
+        Storage::deleteDirectory('products');
         Storage::deleteDirectory('articles');
 
         Storage::makeDirectory('products');
         Storage::makeDirectory('articles');
 
-        Product::factory(10)->create(); */
+        Product::factory(10)->create();
 
         // Productos: 
-        Product::create([
+        /* Product::create([
             'title' => 'Análisis por semana',
             'image' => 'products/producto01.png',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta officiis explicabo quisquam recusandae tenetur voluptatibus architecto earum fugiat deserunt error dolor corporis, esse placeat vitae dolore. Aut, fuga officiis.',
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'products/producto10.png',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
             'price' => 19
-        ]);
+        ]); */
 
         // Artículos: 
         Article::factory(10)->create();

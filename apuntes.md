@@ -2967,7 +2967,8 @@
     + $ heroku config:add APP_ENV=production
     + $ heroku config:add APP_KEY=base64:gUVmds1U2u5m126RsiswRYif8dydHe31tUf143J2X58=
     + $ heroku config:add APP_DEBUG=false
-    + $ heroku config:add APP_URL=https://paymet.herokuapp.com/
+    + $ heroku config:add APP_URL=https://paymet.herokuapp.com
+    + $ heroku config:add FILESYSTEM_DRIVER=public
 13. Crear base de datos Postgre SQL desde la terminal:
     + $ heroku addons:create heroku-postgresql:hobby-dev
     + $ heroku pg:credentials:url
