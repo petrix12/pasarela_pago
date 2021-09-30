@@ -166,6 +166,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'products/producto10.png',
             'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
             'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-        ]); 
+        ]);
+        
     }
 }

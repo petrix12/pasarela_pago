@@ -38,7 +38,3 @@ Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
 });
 
 Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
-
-Route::get('tutorial', function () {
-    return view('tutorial');
-});

@@ -2753,7 +2753,7 @@
                             <p class="text-gray-500 font-bold text-xl">{{ $product->price }} USD</p>
                             <a href="{{ route('products.pay', $product) }}" class="btn btn-primary">Comprar</a>
                         </div>
-                        <img class="h-56 w-full object-cover" src="{{asset($product->image)}}" alt="{{ asset($product->image) }}">
+                        <img class="h-56 w-full object-cover" src="{{Asset($product->image)}}" alt="{{ Asset($product->image) }}">
                         <div class="card-body">
                             <h1 class="text-gray-900 font-bold text-xl uppercase">{{ $product->title }}</h1>
                             <p class="text-gray-600 text-sm mt-1">{{ Str::limit($product->description, 150) }}</p>
@@ -2775,7 +2775,7 @@
                 <article class="card">
                     <div class="card-body">
                         <div class="flex">
-                            <img class="w-48 h-28 object-cover" src="{{asset($product->image)}}" alt="{{asset($product->image)}}">
+                            <img class="w-48 h-28 object-cover" src="{{Asset($product->image)}}" alt="{{Asset($product->image)}}">
                             <div class="ml-4 flex justify-between items-center self-start flex-1">
                                 <h1 class="text-gray-500 font-bold text-lg uppercase">{{$product->title}}</h1>
                                 <p class="font-bold text-gray-500">{{$product->price}} USD</p>
@@ -2802,7 +2802,7 @@
             @foreach ($articles as $article)
                 <article class="card mb-6">
 
-                    <img class="h-72 w-full object-cover object-center" src="{{ asset($article->image) }}" alt="{{ asset($article->image) }}">
+                    <img class="h-72 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
 
                     <div class="card-body">
                         <h1 class="font-bold text-xl mb-2">
@@ -2830,7 +2830,7 @@
             </div>
 
             <figure>
-                <img class="h-80 w-full object-cover object-center" src="{{ asset($article->image) }}" alt="{{ asset($article->image) }}">
+                <img class="h-80 w-full object-cover object-center" src="{{ Asset($article->image) }}" alt="{{ Asset($article->image) }}">
             </figure>
 
             <div class="text-gray-500 mt-4">
@@ -2959,167 +2959,7 @@
     ```
 10. Modificar el seeder **database\seeders\DatabaseSeeder.php**:
     ```php
-    <?php
-
-    namespace Database\Seeders;
-
-    use App\Models\Article;
-    use App\Models\Product;
-    use Illuminate\Database\Seeder;
-    use Illuminate\Support\Facades\Storage;
-
-    class DatabaseSeeder extends Seeder
-    {
-        /**
-        * Seed the application's database.
-        *
-        * @return void
-        */
-        public function run()
-        {
-            // Productos: 
-            Product::create([
-                'title' => 'Análisis por semana',
-                'image' => 'products/producto01.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta officiis explicabo quisquam recusandae tenetur voluptatibus architecto earum fugiat deserunt error dolor corporis, esse placeat vitae dolore. Aut, fuga officiis.',
-                'price' => 59
-            ]);
-            
-            Product::create([
-                'title' => 'Carta de Naturaleza',
-                'image' => 'products/producto02.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ipsum laboriosam repellat, corrupti architecto eveniet quisquam placeat mollitia magnam hic adipisci eligendi assumenda accusamus cupiditate tempora ipsam culpa asperiores provident.',
-                'price' => 99
-            ]);
-
-            Product::create([
-                'title' => 'Fase de Genealogía',
-                'image' => 'products/producto03.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo minima ipsum enim consequuntur aliquid atque tenetur officia, illo sequi assumenda nihil, doloremque quam, ut tempora! Adipisci recusandae quidem iste repudiandae!',
-                'price' => 149
-            ]);
-
-            Product::create([
-                'title' => 'Memorándum Administrativo',
-                'image' => 'products/producto04.png',
-                'description' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nobis beatae dicta sit quisquam ipsum ea alias totam quod dolorum earum eius minus distinctio, sequi debitis esse iste. Doloribus, vel!',
-                'price' => 99
-            ]);
-
-            Product::create([
-                'title' => 'Nacionalidad Italiana',
-                'image' => 'products/producto05.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde tenetur, laborum facilis nisi iure ipsam inventore error minus sed vel praesentium, ad sint id. Reprehenderit voluptates repellat iste facilis nobis?',
-                'price' => 19
-            ]);
-
-            Product::create([
-                'title' => 'Nacionalidad Portuguesa',
-                'image' => 'products/producto06.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus soluta voluptatum est. Ut provident, nihil velit nulla, alias ex modi illum veritatis similique, dolorum tempore expedita quidem iste excepturi corrupti.',
-                'price' => 49
-            ]);
-
-            Product::create([
-                'title' => 'Recurso de Alzada',
-                'image' => 'products/producto07.png',
-                'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. A repudiandae, ea ipsam expedita minus fugiat omnis voluptates, vitae cupiditate voluptatibus quis eius itaque unde pariatur. Reprehenderit atque facere vero sed?',
-                'price' => 99
-            ]);
-
-            Product::create([
-                'title' => 'Resolución Expresa',
-                'image' => 'products/producto08.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quae impedit nesciunt veniam, aliquid dolorem ad sed id illo? Vitae voluptatibus, recusandae molestiae ex rerum nulla esse eos eveniet dolores?',
-                'price' => 99
-            ]);
-
-            Product::create([
-                'title' => 'Servicio de Residencias',
-                'image' => 'products/producto09.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio at exercitationem blanditiis odit quam hic eaque aut facere rerum eius. Facere ex nemo modi. Animi corrupti molestias cupiditate in doloremque.',
-                'price' => 49
-            ]);
-
-            Product::create([
-                'title' => 'Subsanación de Expediente',
-                'image' => 'products/producto10.png',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-                'price' => 79
-            ]);
-
-            // Artículos: 
-            Article::create([
-                'title' => 'Análisis por semana',
-                'image' => 'products/producto01.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta officiis explicabo quisquam recusandae tenetur voluptatibus architecto earum fugiat deserunt error dolor corporis, esse placeat vitae dolore. Aut, fuga officiis.',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-            
-            Article::create([
-                'title' => 'Carta de Naturaleza',
-                'image' => 'products/producto02.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ipsum laboriosam repellat, corrupti architecto eveniet quisquam placeat mollitia magnam hic adipisci eligendi assumenda accusamus cupiditate tempora ipsam culpa asperiores provident.',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Fase de Genealogía',
-                'image' => 'products/producto03.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo minima ipsum enim consequuntur aliquid atque tenetur officia, illo sequi assumenda nihil, doloremque quam, ut tempora! Adipisci recusandae quidem iste repudiandae!',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Memorándum Administrativo',
-                'image' => 'products/producto04.png',
-                'extract' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nobis beatae dicta sit quisquam ipsum ea alias totam quod dolorum earum eius minus distinctio, sequi debitis esse iste. Doloribus, vel!',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Nacionalidad Italiana',
-                'image' => 'products/producto05.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde tenetur, laborum facilis nisi iure ipsam inventore error minus sed vel praesentium, ad sint id. Reprehenderit voluptates repellat iste facilis nobis?',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Nacionalidad Portuguesa',
-                'image' => 'products/producto06.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus soluta voluptatum est. Ut provident, nihil velit nulla, alias ex modi illum veritatis similique, dolorum tempore expedita quidem iste excepturi corrupti.',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Recurso de Alzada',
-                'image' => 'products/producto07.png',
-                'extract' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. A repudiandae, ea ipsam expedita minus fugiat omnis voluptates, vitae cupiditate voluptatibus quis eius itaque unde pariatur. Reprehenderit atque facere vero sed?',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Resolución Expresa',
-                'image' => 'products/producto08.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quae impedit nesciunt veniam, aliquid dolorem ad sed id illo? Vitae voluptatibus, recusandae molestiae ex rerum nulla esse eos eveniet dolores?',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Servicio de Residencias',
-                'image' => 'products/producto09.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio at exercitationem blanditiis odit quam hic eaque aut facere rerum eius. Facere ex nemo modi. Animi corrupti molestias cupiditate in doloremque.',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]);
-
-            Article::create([
-                'title' => 'Subsanación de Expediente',
-                'image' => 'products/producto10.png',
-                'extract' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quibusdam provident voluptatibus similique dicta dolor illum quidem minima quaerat totam omnis laudantium, officiis nostrum ipsa autem eius dolorem vero modi?',
-            ]); 
-        }
-    }
+    ***
     ```
 11. Subir las imagenes de productos y artículos de manera manual a Heroku.
 12. Ejecutar:
@@ -3135,7 +2975,16 @@
     + $ heroku run bash
     + $ composer update
     + $ php artisan migrate:fresh --seed
-    + $ php artisan db:seed
++ $ php artisan db:seed
+
+
+
+
+***
+≡
+    ```php
+    ***
+    ```
 
 ## Material de interés
 
